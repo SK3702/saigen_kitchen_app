@@ -79,8 +79,8 @@ workflows:
   version: 2.1
   build:
     jobs:
-      - rspec:
-      - rubocop:
+      - rspec
+      - rubocop
       - heroku_deploy:
           requires:
             - rspec
