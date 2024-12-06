@@ -23,12 +23,8 @@ jobs:
       - run:
           name: Start containers and verify it is working
           command: |
-            docker network create ci_network || true
             docker-compose up -d
-      - run:
-          name: Wait for MySQL to be ready
-          command: |
-            dockerize -wait tcp://db:3306 -timeout 2m
+            docker exec web curl -4 --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
       - run:
           name: Setup database
           command: |
