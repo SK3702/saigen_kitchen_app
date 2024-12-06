@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Wait for MySQL to be ready
           command: |
-            dockerize -wait tcp://127.0.0.1:3306 -timeout 2m
+            dockerize -wait tcp://db:3306 -timeout 2m
       - run:
           name: Setup database
           command: |
