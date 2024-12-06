@@ -12,6 +12,8 @@ services:
       RAILS_ENV: test
     depends_on:
       - db
+    networks:
+      - ci_network
   db:
     image: mysql:8.0
     environment:
@@ -19,3 +21,8 @@ services:
       MYSQL_DATABASE: test_db
     ports:
       - "3306:3306"
+    networks:
+      - ci_network
+
+networks:
+  ci_network:
