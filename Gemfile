@@ -65,3 +65,4 @@ gem 'aws-sdk-s3', require: false
 gem 'mini_magick'
 gem 'net-pop', '>= 0.1.2'
 gem 'net-protocol', '>= 0.1.2'
+gem 'devise'
