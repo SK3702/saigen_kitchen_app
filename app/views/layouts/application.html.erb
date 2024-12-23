@@ -24,12 +24,30 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto">
-              <li class="nav-item  d-flex justify-content-center">
-                <%= link_to "ログイン", root_path, class:"nav-link" %>
-              </li>
-              <li class="nav-item d-flex justify-content-center">
-                <%= link_to "新規登録", root_path, class:"nav-link" %>
-              </li>
+              <% if user_signed_in? %>
+                <li class="nav-item text-center">
+                  <%= image_tag current_user.avatar.url(:small), style: "object-fit: cover;", class: "rounded-circle", alt: "アバター画像" %>
+                <li class="nav-item dropdown">
+                  <%= link_to current_user.name, "#",
+                              class: "nav-link dropdown-toggle text-center",
+                              role: "button",
+                              data: { bs_toggle: "dropdown" },
+                              aria: { expanded: "false" } %>
+                  <ul class="dropdown-menu dropdown-menu-end text-center">
+                    <li><%= link_to "お気に入りレシピ", "#", class: "dropdown-item" %></li>
+                    <li><%= link_to "アカウント情報", profile_path(current_user.id), class: "dropdown-item" %></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
+                  </ul>
+                </li>
+              <% else %>
+                <li class="nav-item text-center">
+                  <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item text-center">
+                  <%= link_to "新規登録", new_user_registration_path, class: "nav-link" %>
+                </li>
+              <% end %>
             </ul>
             <form class="d-flex" role="search">
               <input class="form-control ms-2 me-2" type="search" placeholder="作品名、料理名" aria-label="Search">
@@ -39,6 +57,11 @@
         </nav>
       </div>
     </header>
+    <% if flash[:notice] %>
+      <div class="alert alert-success" role="alert">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 

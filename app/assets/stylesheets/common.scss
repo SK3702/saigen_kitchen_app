@@ -18,7 +18,25 @@ html {
 }
 
 body{
-    padding-bottom: 150px;
+    padding-bottom: 100px;
+}
+
+.btn {
+  color: white;
+  background-color: #ffa494;
+  border: solid 2px #ff907c;
+}
+
+.btn:hover {
+  background-color: #ff907c;
+  border: solid 2px #ff907c;
+}
+
+.btn:active {
+	-webkit-transform: translate(0,2px);
+	-moz-transform: translate(0,2px);
+	transform: translate(0,2px);
+	border-bottom:none;
 }
 
 /* header */
@@ -73,9 +91,9 @@ footer{
 .popular-recipes, .category-recipes {
   width: 100%;
   display: flex;
-  gap: 8%;
+  gap: 12%;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 0 30px;
 }
 
 .popular-recipe p, .category-recipe p {
@@ -84,7 +102,6 @@ footer{
 
 .recipe-img {
   width: 100%;
-  aspect-ratio: 4/3;
   border-radius: 8px;
   margin-bottom: 20px;
 }
@@ -113,4 +130,22 @@ footer{
     width: 75%;
     margin: 0 auto;
   }
+}
+
+/* ユーザー認証 */
+.min-vh-80 {
+  min-height: 80vh;
+}
+
+.form-label::after{
+  content:'*';
+  color: red;
+  font-size: 14px;
+  margin-left: 4px;
+}
+
+/* profiles */
+.edit-profile-btn {
+  top: 10px;
+  right: 10px;
 }

@@ -1,0 +1,4 @@
+ja:
+  errors:
+    messages:
+      extension_allowlist_error: "は許可されていない拡張子です"

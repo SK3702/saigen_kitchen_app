@@ -63,6 +63,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'aws-sdk-s3', require: false
 gem 'mini_magick'
+gem 'carrierwave', '~> 3.0'
+gem 'fog-aws'
 gem 'net-pop', '>= 0.1.2'
 gem 'net-protocol', '>= 0.1.2'
 gem 'devise'
+gem 'dotenv-rails'
+gem 'rails-i18n'
