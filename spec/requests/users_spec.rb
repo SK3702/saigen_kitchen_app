@@ -101,7 +101,8 @@ RSpec.describe "Users", type: :request do
       context "有効なパラメータの場合" do
         it "アカウント情報更新に成功すること" do
           updated_image = Rack::Test::UploadedFile.new(image_file_path("test_image.png"), "image/png")
-          patch user_registration_path, params: { user: { name: "updated", email: "test@updated.com", bio: "Updated.", avatar: updated_image } }
+          patch user_registration_path,
+            params: { user: { name: "updated", email: "test@updated.com", bio: "Updated.", avatar: updated_image } }
           expect(response).to redirect_to(profile_path(user))
         end
       end
