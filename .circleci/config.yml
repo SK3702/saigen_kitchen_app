@@ -28,10 +28,16 @@ jobs:
       - run:
           name: Setup database
           command: |
+            docker-compose exec db bash -c "until mysqladmin ping -h db --silent; do echo 'Waiting for db...'; sleep 1; done"
             docker-compose exec web bash -c "bundle exec rails db:create db:migrate db:seed"
+      - run:
+          name: Compile Webpacker
+          command: |
+            docker-compose exec web bash -c "RAILS_ENV=test bundle exec rails webpacker:compile --trace"
       - run:
           name: Run rspec
           command: docker-compose exec web bundle exec rspec
+
 
   rubocop:
     working_directory: ~/web
