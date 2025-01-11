@@ -68,7 +68,7 @@ RSpec.describe "Users", type: :system do
       expect(current_path).to eq edit_user_registration_path
     end
 
-    it "正しい情報でアカウント情報を更新できること" do
+    it "正しい情報でアカウント情報を更新でき、表示されること" do
       fill_in "ユーザーネーム", with: "updated"
       fill_in "Email", with: "test@updated.com"
       fill_in "自己紹介", with: "Hi."
@@ -76,8 +76,13 @@ RSpec.describe "Users", type: :system do
       click_button "更新する"
 
       expect(page).to have_content("アカウント情報を変更しました。")
-      expect(user.reload.name).to eq("updated")
-      expect(user.reload.email).to eq("test@updated.com")
+
+      visit profile_path(user)
+      user.reload
+      expect(page).to have_content(user.name)
+      expect(page).to have_content(user.email)
+      expect(page).to have_content(user.bio)
+      expect(page).to have_selector("img[src*='/uploads/user/avatar/']")
     end
 
     it "不正な情報でアカウント情報の更新に失敗すること" do
