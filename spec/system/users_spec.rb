@@ -60,6 +60,20 @@ RSpec.describe "Users", type: :system do
     end
   end
 
+  describe "プロフィールページ" do
+    before do
+      sign_in user
+      visit profile_path(user)
+    end
+
+    it "アカウント情報がプロフィールに表示されていること" do
+      expect(page).to have_content(user.name)
+      expect(page).to have_content(user.email)
+      expect(page).to have_content(user.bio)
+      expect(page).to have_selector("img[src*='/assets/default']")
+    end
+  end
+
   describe "アカウント情報編集" do
     before do
       sign_in(user)

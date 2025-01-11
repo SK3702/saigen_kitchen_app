@@ -5,6 +5,6 @@ FactoryBot.define do
     password { "testuser" }
     password_confirmation { "testuser" }
     bio { "Hello." }
-    avatar { Rack::Test::UploadedFile.new(Rails.root.join('app/assets/images/default.png'), 'image/png') }
+    avatar { nil }
   end
 end

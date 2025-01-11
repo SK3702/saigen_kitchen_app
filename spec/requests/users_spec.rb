@@ -75,7 +75,8 @@ RSpec.describe "Users", type: :request do
       end
 
       it "userのアカウント情報が含まれており、another_userのアカウント情報が含まれていないこと" do
-        expect(response.body).to include(user.name, user.email, user.bio, user.avatar.url)
+        expect(response.body).to include(user.name, user.email, user.bio)
+        expect(response.body).to include('src="/assets/default')
         expect(response.body).not_to include another_user.email
       end
     end
