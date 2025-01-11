@@ -1,0 +1,40 @@
+<section class="bg-light py-3 py-md-5 min-vh-80">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+        <div class="card border border-light-subtle rounded-3 shadow-sm">
+          <div class="card-body p-3 p-md-4 p-xl-5">
+            <div class="text-center mb-3">
+              <%= image_tag("logo.png", alt: "ロゴ画像") %>
+            </div>
+            <h2 class="fs-6 fw-normal text-center text-secondary mb-4">
+              ご利用中のメールアドレスをご入力ください
+            </h2>
+            <%= form_with model: resource, url: user_password_path, local: true do |f| %>
+              <%= render 'devise/shared/error_messages', model: f.object %>
+              <div class="row gy-2 overflow-hidden">
+                <div class="col-12">
+                  <div class="form-floating">
+                    <%= f.email_field :email, class: "form-control", required: true %>
+                    <%= f.label :email, "Email", class: "form-label" %>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="d-grid my-3">
+                    <%= f.submit "メールを送信", class: "btn btn-primary btn-lg" %>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="d-flex gap-2 justify-content-between">
+                    <%= link_to "ログイン", new_user_session_path, class: "link-primary text-decoration-none" %>
+                    <%= link_to "新規登録", new_user_registration_path, class: "link-primary text-decoration-none" %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,46 @@
+<section class="bg-light py-3 py-md-5 min-vh-80">
+  <div class="container">
+    <% if flash[:alert] %>
+      <div class="alert alert-danger"><%= flash[:alert] %></div>
+    <% end %>
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+        <div class="card border border-light-subtle rounded-3 shadow-sm">
+          <div class="card-body p-3 p-md-4 p-xl-5">
+            <div class="text-center mb-3">
+              <%= image_tag("logo.png", alt: "ロゴ画像") %>
+            </div>
+            <h2 class="fs-6 fw-normal text-center text-secondary mb-4">ログイン</h2>
+            <%= form_with scope: :user, url: user_session_path, local: true, data: { turbo: "false" } do |f| %>
+              <%= render "devise/shared/error_messages", resource: resource %>
+              <div class="row gy-2 overflow-hidden">
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <%= f.email_field :email, class: "form-control", autofocus: true, required: true %>
+                    <%= f.label :email, "Email", class: "form-label" %>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-floating mb-3">
+                    <%= f.password_field :password, class: "form-control", required: true %>
+                    <%= f.label :password, "パスワード(6文字以上)", class: "form-label" %>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="d-grid my-3">
+                    <%= f.submit "ログイン", class: "btn btn-primary btn-lg" %>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <p class="m-0 text-secondary text-center">
+                    <%= render "devise/shared/links" %>
+                  </p>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
