@@ -96,6 +96,14 @@ RSpec.describe "Users", type: :request do
       it "アカウント情報編集フォームが含まれていること" do
         expect(response.body).to include("アカウント情報編集", "ユーザーネーム", "Email", "自己紹介", "アイコン", "更新する")
       end
+
+      context "未ログインユーザーの場合" do
+        it '未ログインユーザはログインページにリダイレクトされること' do
+          sign_out user
+          get edit_user_registration_path
+          expect(response).to redirect_to(new_user_session_path)
+        end
+      end
     end
 
     describe "PATCH /users" do
@@ -115,13 +123,21 @@ RSpec.describe "Users", type: :request do
           expect(response.body).to include("ユーザーネームを入力してください", "Eメールは不正な値です", "アイコン画像は許可されていない拡張子です")
         end
       end
+
+      context "未ログインユーザーの場合" do
+        it '未ログインユーザはログインページにリダイレクトされること' do
+          sign_out user
+          patch user_registration_path, params: { user: { name: "updated" } }
+          expect(response).to redirect_to(new_user_session_path)
+        end
+      end
     end
   end
 
   describe "ログアウト" do
     describe "DELETE /users/sign_out" do
-      before { sign_in user }
       it "アカウントがログアウトできること" do
+        sign_in user
         expect { delete destroy_user_session_path }.to change(User, :count).by(0)
         expect(response).to redirect_to(root_path)
       end
@@ -130,10 +146,18 @@ RSpec.describe "Users", type: :request do
 
   describe "アカウント削除" do
     describe "DELETE /users" do
-      before { sign_in user }
       it "アカウントが削除されること" do
+        sign_in user
         expect { delete user_registration_path }.to change(User, :count).by(-1)
         expect(response).to redirect_to(root_path)
+      end
+
+      context "未ログインユーザーの場合" do
+        it '未ログインユーザはログインページにリダイレクトされること' do
+          sign_out user
+          delete user_registration_path
+          expect(response).to redirect_to(new_user_session_path)
+        end
       end
     end
   end

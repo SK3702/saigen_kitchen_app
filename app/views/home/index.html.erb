@@ -1,21 +1,25 @@
 <section class="first-view">
   <div class="fisrt-view-container">
-    <div class="first-view-logo">
-      <%= image_tag("first-view-logo.png", class: "first-view-logo-img") %>
+    <div class="bg-yellow py-5">
+      <%= image_tag("first-view-logo.png", class: "d-block col-lg-5 col-md-7 col-9 mx-auto") %>
     </div>
+    <form class="d-flex col-md-6 offset-md-3 mt-5" role="search">
+      <input class="form-control form-control-lg mx-2 search-bar" type="search" placeholder="作品名、料理名" aria-label="Search">
+      <button class="btn me-2" type="submit">Search</button>
+    </form>
     <div class="popular-recipes-area">
       <h2>人気レシピ</h2>
         <ul class="popular-recipes">
           <li class="popular-recipe">
-            <%= image_tag("logocopy.png", class: "recipe-img") %>
+            <%= image_tag("logo_pic.png", class: "recipe-img") %>
             <p>タイトル</p>
           </li>
           <li class="popular-recipe">
-            <%= image_tag("logocopy.png", class: "recipe-img") %>
+            <%= image_tag("logo_pic.png", class: "recipe-img") %>
             <p>タイトル</p>
           </li>
           <li class="popular-recipe">
-            <%= image_tag("logocopy.png", class: "recipe-img") %>
+            <%= image_tag("logo_pic.png", class: "recipe-img") %>
             <p>タイトル</p>
           </li>
         </ul>
@@ -25,71 +29,35 @@
 
 <section class="category-area">
   <div class="category-recipes-area">
-    <h2>マンガ</h2>
-    <ul class="category-recipes">
-      <li class="category-recipe">
-        <%= image_tag("logocopy.png", class: "recipe-img") %>
-        <p>タイトル</p>
-      </li>
-      <li class="category-recipe">
-        <%= image_tag("logocopy.png", class: "recipe-img") %>
-        <p>タイトル</p>
-      </li>
-      <li class="category-recipe">
-        <%= image_tag("logocopy.png", class: "recipe-img") %>
-        <p>タイトル</p>
-      </li>
-    </ul>
-  </div>
-  <div class="category-recipes-area">
-    <h2>アニメ</h2>
-    <ul class="category-recipes">
-      <li class="category-recipe">
-        <%= image_tag("logocopy.png", class: "recipe-img") %>
-        <p>タイトル</p>
-      </li>
-      <li class="category-recipe">
-        <%= image_tag("logocopy.png", class: "recipe-img") %>
-        <p>タイトル</p>
-      </li>
-      <li class="category-recipe">
-        <%= image_tag("logocopy.png", class: "recipe-img") %>
-        <p>タイトル</p>
-      </li>
-    </ul>
-  </div>
-  <div class="category-recipes-area">
-    <h2>小説</h2>
-    <ul class="category-recipes">
-      <li class="category-recipe">
-        <%= image_tag("logocopy.png", class: "recipe-img") %>
-        <p>タイトル</p>
-      </li>
-      <li class="category-recipe">
-        <%= image_tag("logocopy.png", class: "recipe-img") %>
-        <p>タイトル</p>
-      </li>
-      <li class="category-recipe">
-        <%= image_tag("logocopy.png", class: "recipe-img") %>
-        <p>タイトル</p>
-      </li>
-    </ul>
-  </div>
-  <div class="category-recipes-area">
-    <h2>その他</h2>
-    <ul class="category-recipes">
-      <li class="category-recipe">
-        <%= image_tag("logocopy.png", class: "recipe-img") %>
-        <p>タイトル</p>
-      </li>
-      <li class="category-recipe">
-        <%= image_tag("logocopy.png", class: "recipe-img") %>
-        <p>タイトル</p>
-      </li>
-      <li class="category-recipe">
-        <%= image_tag("logocopy.png", class: "recipe-img") %>
-        <p>タイトル</p>
-      </li>
-    </ul>
+    <% @recipe_categories.each do |rc| %>
+      <h2><%= rc[:category].name %></h2>
+      <div class="d-md-flex gap-lg-5 px-lg-4 align-items-center">
+        <ul class="row gx-5 gy-2 px-lg-3 pe-md-4 px-0">
+          <% rc[:recipes].each do |recipe| %>
+            <li class="flex-md-grow-1 col-10 col-md-4 mx-auto px-3 px-lg-4">
+              <%= link_to recipe_path(recipe.id), class: "text-decoration-none" do %>
+                <div class="mb-1">
+                  <%= image_tag recipe.recipe_image.thumb.url, class:"img-fluid rounded mb-2 mx-auto d-block", alt: "料理画像" %>
+                </div>
+                <p class="text-center fw-bold text-dark mb-0 custom-fs-16px"><%= recipe.title %></p>
+                <p class="text-dark text-center mb-0 custom-fs-14px"><%= recipe.work_name %></p>
+              <% end %>
+              <p class="text-muted text-center">
+                <%= link_to profile_path(recipe.user_id), class: "text-decoration-none" do %>
+                  <%= image_tag(recipe.user.avatar.smaller.url, alt: "アイコン画像", class: "img-fluid rounded-circle border border-muted") %>
+                  <span class="text-dark custom-fs-14px"><%= recipe.user.name %></span>
+                <% end %>
+              </p>
+            </li>
+          <% end %>
+        </ul>
+        <div class="d-flex flex-column align-items-center text-center">
+          <%= link_to category_path(rc[:category].id), class: "text-decoration-none" do %>
+            <i class="bi bi-arrow-right fs-2 border border-muted text-muted rounded-circle mb-2 custom-arrow-icon"></i>
+            <p class="custom-fs text-muted text-nowrap mb-5">もっと見る</p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </section>

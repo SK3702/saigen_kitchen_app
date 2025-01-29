@@ -9,6 +9,12 @@ CarrierWave.configure do |config|
       aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
       region: ENV['AWS_REGION'],
     }
+  elsif Rails.env.test?
+    CarrierWave.configure do |config|
+      config.storage = :file
+      config.enable_processing = true
+      config.root = Rails.root.join('public/uploads/test')
+    end
   else
     config.storage :file
     config.enable_processing = false if Rails.env.test?

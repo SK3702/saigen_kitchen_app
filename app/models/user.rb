@@ -7,4 +7,6 @@ class User < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
   validates :name, presence: true
   validates :bio, length: { maximum: 200 }
+
+  has_many :recipes, dependent: :destroy
 end

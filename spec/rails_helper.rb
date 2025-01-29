@@ -62,7 +62,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.after(:suite) do
-    FileUtils.rm_rf(Dir["#{Rails.root}/public/uploads"])
+    FileUtils.rm_rf(Dir["#{Rails.root}/public/uploads/test"])
   end
 
   config.include FactoryBot::Syntax::Methods
@@ -76,4 +76,15 @@ RSpec.configure do |config|
   config.include FileHelper, type: :request
   config.include FileHelper, type: :system
   config.include FileHelper, type: :model
+
+  config.before(:each, js: true) do
+    driven_by :selenium_chrome_headless
+  end
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
 end

@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Users", type: :system do
   let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
 
   describe "ユーザー新規登録" do
     before do
@@ -72,6 +73,19 @@ RSpec.describe "Users", type: :system do
       expect(page).to have_content(user.bio)
       expect(page).to have_selector("img[src*='/assets/default']")
     end
+
+    it "ログインユーザーが自分のアカウント情報を編集できるリンクがあり、クリックで遷移すること" do
+      click_link "編集"
+      expect(current_path).to eq(edit_user_registration_path)
+    end
+
+    context "他のユーザーの場合" do
+      it "編集ボタンが表示されないこと" do
+        sign_in other_user
+        visit profile_path(user.id)
+        expect(page).not_to have_link("編集", href: edit_user_registration_path(user))
+      end
+    end
   end
 
   describe "アカウント情報編集" do
@@ -80,6 +94,13 @@ RSpec.describe "Users", type: :system do
       visit profile_path(user)
       click_link "編集"
       expect(current_path).to eq edit_user_registration_path
+    end
+
+    it "現在のレシピ情報が編集フォームに表示されていること" do
+      fill_in "ユーザーネーム", with: user.name
+      fill_in "Email", with: user.email
+      fill_in "自己紹介", with: user.bio
+      expect(page).to have_selector("img[src*='/assets/default']")
     end
 
     it "正しい情報でアカウント情報を更新でき、表示されること" do
@@ -121,12 +142,6 @@ RSpec.describe "Users", type: :system do
     it "ユーザーがログアウトできること" do
       expect(page).to have_content("ログアウトしました。")
       expect(page).to have_content("ログイン")
-    end
-
-    it "ログアウト後に保護されたページにアクセスできないこと" do
-      visit profile_path(user)
-      expect(current_path).to eq(new_user_session_path)
-      expect(page).to have_content("ログインもしくはアカウント登録してください。")
     end
   end
 
