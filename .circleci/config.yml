@@ -11,6 +11,8 @@ jobs:
     working_directory: ~/web
     docker:
       - image: cimg/ruby:3.3.3
+    environment:
+      NODE_OPTIONS: --openssl-legacy-provider
     resource_class: small
     steps:
       - checkout
@@ -30,6 +32,9 @@ jobs:
           command: |
             docker-compose exec db bash -c "until mysqladmin ping -h db --silent; do echo 'Waiting for db...'; sleep 1; done"
             docker-compose exec web bash -c "bundle exec rails db:create db:migrate db:seed"
+      - run:
+          name: Set NODE_OPTIONS in Web container
+          command: docker-compose exec web bash -c "export NODE_OPTIONS=--openssl-legacy-provider"
       - run:
           name: Compile Webpacker
           command: |
