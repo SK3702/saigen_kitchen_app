@@ -10,7 +10,7 @@ jobs:
   rspec:
     working_directory: ~/web
     docker:
-      - image: cimg/ruby:3.3.3-node-18
+      - image: cimg/ruby:3.3.3
     environment:
       NODE_OPTIONS: --openssl-legacy-provider
     resource_class: small
