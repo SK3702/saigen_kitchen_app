@@ -10,7 +10,7 @@
     "turbolinks": "^5.2.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
-    "compression-webpack-plugin": "^9.4.1"
+    "compression-webpack-plugin": "^9.2.0"
   },
   "version": "0.1.0",
   "devDependencies": {
