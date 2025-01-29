@@ -10,7 +10,7 @@ jobs:
   rspec:
     working_directory: ~/web
     docker:
-      - image: cimg/ruby:3.3.3
+      - image: cimg/ruby:3.3.3-node-18
     environment:
       NODE_OPTIONS: --openssl-legacy-provider
     resource_class: small
@@ -33,12 +33,13 @@ jobs:
             docker-compose exec db bash -c "until mysqladmin ping -h db --silent; do echo 'Waiting for db...'; sleep 1; done"
             docker-compose exec web bash -c "bundle exec rails db:create db:migrate db:seed"
       - run:
-          name: Set NODE_OPTIONS in Web container
-          command: docker-compose exec web bash -c "export NODE_OPTIONS=--openssl-legacy-provider"
+          name: Upgrade compression-webpack-plugin
+          command: |
+            docker-compose exec web bash -c "yarn upgrade compression-webpack-plugin"
       - run:
           name: Compile Webpacker
           command: |
-            docker-compose exec web bash -c "RAILS_ENV=test bundle exec rails webpacker:compile --trace"
+            docker-compose exec web bash -c "NODE_OPTIONS=--openssl-legacy-provider RAILS_ENV=test bundle exec rails webpacker:compile --trace"
       - run:
           name: Run rspec
           command: docker-compose exec web bundle exec rspec
