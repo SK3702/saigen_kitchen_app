@@ -6,7 +6,7 @@ RSpec.describe "Categories", type: :system do
   let!(:manga_recipes) do
     create_list(:recipe, 2, category_id: category.id).
       each_with_index do |recipe, index|
-        recipe.update(created_at: index.day.ago)
+        recipe.update(created_at: index.day.ago, title: "test_title#{index}")
       end
   end
   let!(:anime_recipe) { create(:recipe, title: "タイトル１", category_id: other_category.id) }
