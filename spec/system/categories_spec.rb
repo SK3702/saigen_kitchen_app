@@ -11,7 +11,7 @@ RSpec.describe "Categories", type: :system do
   end
   let!(:anime_recipe) { create(:recipe, title: "タイトル１", category_id: other_category.id) }
 
-  before { visit category_path(category.id)}
+  before { visit category_path(category.id) }
 
   it "サイドバーに全てのカテゴリー名が表示され、選択しているカテゴリー以外のカテゴリー名にリンクがあること" do
     within(".nav") do

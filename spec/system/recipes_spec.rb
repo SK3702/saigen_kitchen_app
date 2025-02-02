@@ -41,7 +41,7 @@ RSpec.describe "Recipes", type: :system do
       end
     end
 
-    it "画像選択で画像プレビューが表示されること", js:true do
+    it "画像選択で画像プレビューが表示されること", js: true do
       attach_file("料理画像", image_file_path("test_recipe_image.png"))
       expect(page).to have_css("#new-image img")
     end
@@ -72,8 +72,8 @@ RSpec.describe "Recipes", type: :system do
         click_button "+追加"
       end
 
-      expect(page).to have_field ("recipe[ingredients_attributes][1][name]")
-      expect(page).to have_field ("recipe[ingredients_attributes][1][quantity]")
+      expect(page).to have_field("recipe[ingredients_attributes][1][name]")
+      expect(page).to have_field("recipe[ingredients_attributes][1][quantity]")
     end
 
     it "追加ボタンで手順のフォームが追加されること", js: true do
@@ -81,7 +81,7 @@ RSpec.describe "Recipes", type: :system do
         click_button "+追加"
       end
 
-      expect(page).to have_field ("recipe[instructions_attributes][1][description]")
+      expect(page).to have_field("recipe[instructions_attributes][1][description]")
     end
   end
 
@@ -181,7 +181,7 @@ RSpec.describe "Recipes", type: :system do
       end
     end
 
-    it "画像選択で古い画像が消え、新しい画像プレビューが表示されること", js:true do
+    it "画像選択で古い画像が消え、新しい画像プレビューが表示されること", js: true do
       attach_file("料理画像", image_file_path("test_recipe_image.png"))
       expect(page).not_to have_css("#current-image")
       expect(page).to have_css("#new-image img")
@@ -209,8 +209,8 @@ RSpec.describe "Recipes", type: :system do
         click_button "+追加"
       end
 
-      expect(page).to have_field ("recipe[ingredients_attributes][3][name]")
-      expect(page).to have_field ("recipe[ingredients_attributes][3][quantity]")
+      expect(page).to have_field("recipe[ingredients_attributes][3][name]")
+      expect(page).to have_field("recipe[ingredients_attributes][3][quantity]")
     end
 
     it "追加ボタンで手順のフォームが追加されること", js: true do
@@ -218,7 +218,7 @@ RSpec.describe "Recipes", type: :system do
         click_button "+追加"
       end
 
-      expect(page).to have_field ("recipe[instructions_attributes][3][description]")
+      expect(page).to have_field("recipe[instructions_attributes][3][description]")
     end
 
     it "削除ボタンを押すとレシピが削除されること" do
