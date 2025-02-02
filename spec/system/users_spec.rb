@@ -117,7 +117,7 @@ RSpec.describe "Users", type: :system do
       expect(page).to have_content(user.name)
       expect(page).to have_content(user.email)
       expect(page).to have_content(user.bio)
-      expect(page).to have_selector("img[src*='/uploads/user/avatar/']")
+      expect(page).to have_selector("img[src$='#{user.avatar.url}']")
     end
 
     it "不正な情報でアカウント情報の更新に失敗すること" do

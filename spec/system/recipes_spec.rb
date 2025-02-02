@@ -27,6 +27,11 @@ RSpec.describe "Recipes", type: :system do
       expect(current_path).to eq recipe_path(Recipe.last.id)
     end
 
+    it "画像選択で画像プレビューが表示されること", js:true do
+      attach_file("料理画像", image_file_path("test_recipe_image.png"))
+      expect(page).to have_css("#new-image img")
+    end
+
     it "無効な情報を入力するとレシピを投稿できないこと" do
       fill_in "レシピタイトル", with: ""
       fill_in "作品名", with: ""
@@ -46,6 +51,23 @@ RSpec.describe "Recipes", type: :system do
       expect(page).to have_content("ポイント・コツを入力してください")
       expect(page).to have_content("材料を少なくとも1つ追加してください。")
       expect(page).to have_content("手順を少なくとも1つ追加してください。")
+    end
+
+    it "追加ボタンで材料のフォームが追加されること", js: true do
+      within(".ingredients-wrapper") do
+        click_button "+追加"
+      end
+
+      expect(page).to have_field ("recipe[ingredients_attributes][1][name]")
+      expect(page).to have_field ("recipe[ingredients_attributes][1][quantity]")
+    end
+
+    it "追加ボタンで手順のフォームが追加されること", js: true do
+      within(".instructions-wrapper") do
+        click_button "+追加"
+      end
+
+      expect(page).to have_field ("recipe[instructions_attributes][1][description]")
     end
   end
 
@@ -137,6 +159,12 @@ RSpec.describe "Recipes", type: :system do
       expect(page).to have_content("新しい手順")
     end
 
+    it "画像選択で古い画像が消え、新しい画像プレビューが表示されること", js:true do
+      attach_file("料理画像", image_file_path("test_recipe_image.png"))
+      expect(page).not_to have_css("#current-image")
+      expect(page).to have_css("#new-image img")
+    end
+
     it "無効な情報を入力するとエラーが表示されること" do
       fill_in "レシピタイトル", with: ""
       fill_in "作品名", with: ""
@@ -152,6 +180,23 @@ RSpec.describe "Recipes", type: :system do
       expect(page).to have_content("材料名を入力してください")
       expect(page).to have_content("分量を入力してください")
       expect(page).to have_content("説明を入力してください")
+    end
+
+    it "追加ボタンで材料のフォームが追加されること", js: true do
+      within(".ingredients-wrapper") do
+        click_button "+追加"
+      end
+
+      expect(page).to have_field ("recipe[ingredients_attributes][3][name]")
+      expect(page).to have_field ("recipe[ingredients_attributes][3][quantity]")
+    end
+
+    it "追加ボタンで手順のフォームが追加されること", js: true do
+      within(".instructions-wrapper") do
+        click_button "+追加"
+      end
+
+      expect(page).to have_field ("recipe[instructions_attributes][3][description]")
     end
 
     it "削除ボタンを押すとレシピが削除されること" do

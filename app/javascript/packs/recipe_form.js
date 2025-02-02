@@ -4,7 +4,7 @@ $(document).on('turbolinks:load', function() {
   const pageType = document.body.dataset.page;
 
   function addIngredientForm() {
-    const index = ingredientsContainer.children.length;
+    const index = ingredientsContainer.querySelectorAll('.ingredient-group').length;
     const newIngredient = `
     <div class="ingredient-group">
       <div class="row g-3 mb-3 align-items-end">

@@ -41,60 +41,64 @@
             </div>
 
             <h2 class="mt-5 mb-3">材料</h2>
-            <div id="ingredients-container">
-              <div class="row g-3">
-                <div class="col-6">
-                  <%= form.label :name, "材料名", class: "form-label" %>
-                </div>
-                <div class="col-4">
-                  <%= form.label :quantity, "分量", class: "form-label" %>
-                </div>
-              </div>
-              <% @recipe.ingredients.each_with_index do |ingredient, index| %>
-                <div class="ingredient-group">
-                  <%= form.hidden_field "ingredients_attributes[#{index}][id]", value: ingredient.id %>
-                  <div class="row g-3 mb-3 align-items-end">
-                    <div class="col-6">
-                      <%= form.text_field "ingredients_attributes[#{index}][name]", value: ingredient.name, class: "form-control", placeholder: "例: トマト" %>
-                    </div>
-                    <div class="col-5">
-                      <%= form.text_field "ingredients_attributes[#{index}][quantity]", value: ingredient.quantity, class: "form-control", placeholder: "例: 100g" %>
-                    </div>
-                    <div class="col-1">
-                      <%= form.hidden_field "ingredients_attributes[#{index}][_destroy]",
-                                            value: "false",
-                                            id: "destroy-ingredient-#{index}",
-                                            data: { destroy_field: true } %>
-                      <%= button_tag "", type: "button", class: "btn-close mb-2 remove-ingredient", aria: { label: "Close" }, data: { target: "#destroy-ingredient-#{index}" } %>
-                    </div>
+            <div class="ingredients-wrapper">
+              <div id="ingredients-container">
+                <div class="row g-3">
+                  <div class="col-6">
+                    <%= form.label :name, "材料名", class: "form-label" %>
+                  </div>
+                  <div class="col-4">
+                    <%= form.label :quantity, "分量", class: "form-label" %>
                   </div>
                 </div>
-              <% end %>
+                <% @recipe.ingredients.each_with_index do |ingredient, index| %>
+                  <div class="ingredient-group">
+                    <%= form.hidden_field "ingredients_attributes[#{index}][id]", value: ingredient.id %>
+                    <div class="row g-3 mb-3 align-items-end">
+                      <div class="col-6">
+                        <%= form.text_field "ingredients_attributes[#{index}][name]", value: ingredient.name, class: "form-control", placeholder: "例: トマト" %>
+                      </div>
+                      <div class="col-5">
+                        <%= form.text_field "ingredients_attributes[#{index}][quantity]", value: ingredient.quantity, class: "form-control", placeholder: "例: 100g" %>
+                      </div>
+                      <div class="col-1">
+                        <%= form.hidden_field "ingredients_attributes[#{index}][_destroy]",
+                                              value: "false",
+                                              id: "destroy-ingredient-#{index}",
+                                              data: { destroy_field: true } %>
+                        <%= button_tag "", type: "button", class: "btn-close mb-2 remove-ingredient", aria: { label: "Close" }, data: { target: "#destroy-ingredient-#{index}" } %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+              <%= button_tag "+追加", type: "button", class: "d-block mx-auto border-0 bg-transparent", id: "add-ingredient" %>
             </div>
-            <div id="add-ingredient", role="button", class="text-center">+追加</div>
 
             <h2 class="mt-5 mb-3">作り方</h2>
-            <div id="instructions-container">
-              <% @recipe.instructions.each_with_index do |instruction, index| %>
-                <div class="instruction-group">
-                  <%= form.hidden_field "instructions_attributes[#{index}][id]", value: instruction.id %>
-                  <div class="row g-3 mb-3 align-items-end">
-                    <div class="col-11">
-                      <%= form.label :description, "手順 #{index + 1}", class: "form-label" %>
-                      <%= form.text_area "instructions_attributes[#{index}][description]", value: instruction.description, class: "form-control", rows: 2, placeholder: "例: フライパンにオリーブオイルを熱し、トマトを炒める" %>
-                    </div>
-                    <div class="col-1">
-                    <%= form.hidden_field "instructions_attributes[#{index}][_destroy]",
-                                          value: "false",
-                                          id: "destroy-instruction-#{index}",
-                                          data: { destroy_field: true } %>
-                      <%= button_tag "", type: "button", class: "btn-close mb-3 remove-instruction", aria: { label: "Close" }, data: { target: "#destroy-instruction-#{index}" } %>
+            <div class="instructions-wrapper">
+              <div id="instructions-container">
+                <% @recipe.instructions.each_with_index do |instruction, index| %>
+                  <div class="instruction-group">
+                    <%= form.hidden_field "instructions_attributes[#{index}][id]", value: instruction.id %>
+                    <div class="row g-3 mb-3 align-items-end">
+                      <div class="col-11">
+                        <%= form.label :description, "手順 #{index + 1}", class: "form-label" %>
+                        <%= form.text_area "instructions_attributes[#{index}][description]", value: instruction.description, class: "form-control", rows: 2, placeholder: "例: フライパンにオリーブオイルを熱し、トマトを炒める" %>
+                      </div>
+                      <div class="col-1">
+                      <%= form.hidden_field "instructions_attributes[#{index}][_destroy]",
+                                            value: "false",
+                                            id: "destroy-instruction-#{index}",
+                                            data: { destroy_field: true } %>
+                        <%= button_tag "", type: "button", class: "btn-close mb-3 remove-instruction", aria: { label: "Close" }, data: { target: "#destroy-instruction-#{index}" } %>
+                      </div>
                     </div>
                   </div>
-                </div>
-              <% end %>
+                <% end %>
+              </div>
+              <%= button_tag "+追加", type: "button", class: "d-block mx-auto border-0 bg-transparent", id: "add-instruction" %>
             </div>
-            <div id="add-instruction", role="button", class="text-center">+追加</div>
 
             <div class="mt-5 me-xl-4 me-md-3 me-2 d-flex justify-content-end">
               <%= link_to "削除する", recipe_path, method: :delete, data: { confirm: "本当に削除しますか？" }, class:"text-decoration-none text-danger border border-danger px-3 py-1 rounded d-flex align-items-center me-4" %>

@@ -10,13 +10,11 @@ CarrierWave.configure do |config|
       region: ENV['AWS_REGION'],
     }
   elsif Rails.env.test?
-    CarrierWave.configure do |config|
-      config.storage = :file
-      config.enable_processing = true
-      config.root = Rails.root.join('public/uploads/test')
-    end
+    config.storage = :file
+    config.enable_processing = false
+    config.root = Rails.root.join('public')
   else
     config.storage :file
-    config.enable_processing = false if Rails.env.test?
+    config.enable_processing = false
   end
 end
