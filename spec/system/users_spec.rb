@@ -3,6 +3,13 @@ require "rails_helper"
 RSpec.describe "Users", type: :system do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
+  let!(:recipes) do
+    create_list(:recipe, 2, user_id: user.id).
+      each_with_index do |recipe, index|
+        recipe.update(created_at: index.day.ago, title: "test_recipe#{index}")
+      end
+  end
+  let!(:other_recipe) { create(:recipe, title: "other_title", user_id: other_user.id) }
 
   describe "ユーザー新規登録" do
     before do
@@ -74,16 +81,41 @@ RSpec.describe "Users", type: :system do
       expect(page).to have_selector("img[src*='/assets/default']")
     end
 
+    it "ユーザーの投稿したレシピが最新のレシピから順に表示されていること" do
+      display_recipes = all(".recipe-link")
+
+      expect(display_recipes.first).to have_content(recipes[0].title)
+      expect(display_recipes.last).to have_content(recipes[1].title)
+    end
+
+    it "ユーザーの投稿したレシピ情報のみが表示されており、レシピ情報押下でレシピページへ遷移すること" do
+      recipes.each do |recipe|
+        expect(page).to have_selector("img[src$='#{recipe.recipe_image.thumb.url}']")
+        expect(page).to have_link(recipe.title, href: recipe_path(recipe.id))
+      end
+      expect(page).not_to have_content(other_recipe.title)
+
+      all(".recipe-link").first.click
+      expect(current_path).to eq recipe_path(recipes[0].id)
+    end
+
     it "ログインユーザーが自分のアカウント情報を編集できるリンクがあり、クリックで遷移すること" do
       click_link "編集"
       expect(current_path).to eq(edit_user_registration_path)
     end
 
     context "他のユーザーの場合" do
-      it "編集ボタンが表示されないこと" do
+      before do
         sign_in other_user
         visit profile_path(user.id)
+      end
+
+      it "編集ボタンが表示されないこと" do
         expect(page).not_to have_link("編集", href: edit_user_registration_path(user))
+      end
+
+      it "emailが表示されないこと" do
+        expect(page).not_to have_content(user.email)
       end
     end
   end

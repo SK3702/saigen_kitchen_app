@@ -40,8 +40,8 @@
         <ul class="row gx-4 gy-2 ps-5 pe-5">
           <% @posted_recipes.each do |recipe| %>
             <li class="col-6 col-md-4">
-              <%= link_to recipe_path(recipe.id), class: "text-decoration-none" do %>
-                <%= image_tag recipe.recipe_image.thumb.url, class:"img-fluid rounded mb-2 mx-auto d-block object-fit-cover" %>
+              <%= link_to recipe_path(recipe.id), class: "text-decoration-none recipe-link" do %>
+                <%= image_tag recipe.recipe_image.thumb.url, class:"img-fluid rounded mb-2 mx-auto d-block object-fit-cover", alt: "料理画像" %>
                 <p class="text-center fw-bold text-dark custom-fs-16px"><%= recipe.title %></p>
               <% end %>
             </li>
