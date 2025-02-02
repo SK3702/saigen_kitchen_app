@@ -14,17 +14,31 @@ RSpec.describe "Recipes", type: :system do
     end
 
     it "正しい情報を入力するとレシピを投稿できること" do
-      fill_in "レシピタイトル", with: "test_recipe"
-      fill_in "作品名", with: "test_book"
+      fill_in "レシピタイトル", with: "new_recipe"
+      fill_in "作品名", with: "new_book"
       select "マンガ", from: "カテゴリー"
       attach_file("料理画像", image_file_path("test_recipe_image.png"))
-      fill_in "ポイント・コツ", with: "簡単"
-      fill_in "recipe[ingredients_attributes[0][name]]", with: "卵"
-      fill_in "recipe[ingredients_attributes[0][quantity]]", with: "2個"
-      fill_in "recipe[instructions_attributes[0][description]]", with: "手順の説明"
+      fill_in "ポイント・コツ", with: "難しいです。"
+      fill_in "recipe[ingredients_attributes[0][name]]", with: "小麦粉"
+      fill_in "recipe[ingredients_attributes[0][quantity]]", with: "100g"
+      fill_in "recipe[instructions_attributes[0][description]]", with: "新しい手順の説明"
       click_button "投稿する"
 
-      expect(current_path).to eq recipe_path(Recipe.last.id)
+      created_recipe = Recipe.last
+      expect(current_path).to eq recipe_path(created_recipe.id)
+      expect(page).to have_content(created_recipe.title)
+      expect(page).to have_content(created_recipe.work_name)
+      expect(page).to have_content(created_recipe.category.name)
+      expect(page).to have_selector("img[src$='#{created_recipe.recipe_image.url}']")
+      expect(page).to have_content(created_recipe.tip)
+      created_recipe.ingredients.each do |ingredient|
+        expect(page).to have_content(ingredient.name)
+        expect(page).to have_content(ingredient.quantity)
+      end
+      created_recipe.instructions.each do |instruction|
+        expect(page).to have_content(instruction.step)
+        expect(page).to have_content(instruction.description)
+      end
     end
 
     it "画像選択で画像プレビューが表示されること", js:true do
@@ -150,13 +164,21 @@ RSpec.describe "Recipes", type: :system do
       fill_in "recipe[instructions_attributes[0][description]]", with: "新しい手順"
       click_button "更新する"
 
-      expect(page).to have_content("新しいタイトル")
-      expect(page).to have_content("新しい作品名")
-      expect(page).to have_content("アニメ")
-      expect(page).to have_content("新しいポイント")
-      expect(page).to have_content("新しい材料")
-      expect(page).to have_content("200g")
-      expect(page).to have_content("新しい手順")
+      recipe.reload
+      expect(current_path).to eq recipe_path(recipe.id)
+      expect(page).to have_content(recipe.title)
+      expect(page).to have_content(recipe.work_name)
+      expect(page).to have_content(recipe.category.name)
+      expect(page).to have_selector("img[src$='#{recipe.recipe_image.url}']")
+      expect(page).to have_content(recipe.tip)
+      recipe.ingredients.each do |ingredient|
+        expect(page).to have_content(ingredient.name)
+        expect(page).to have_content(ingredient.quantity)
+      end
+      recipe.instructions.each do |instruction|
+        expect(page).to have_content(instruction.step)
+        expect(page).to have_content(instruction.description)
+      end
     end
 
     it "画像選択で古い画像が消え、新しい画像プレビューが表示されること", js:true do
