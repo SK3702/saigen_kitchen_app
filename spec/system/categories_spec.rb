@@ -41,7 +41,7 @@ RSpec.describe "Categories", type: :system do
       expect(page).to have_link(recipe.title, href: recipe_path(recipe.id))
       expect(page).to have_link(recipe.work_name, href: recipe_path(recipe.id))
       expect(page).to have_link(recipe.user.name, href: profile_path(recipe.user.id))
-      expect(page).to have_css("a[href='#{profile_path(recipe.user.id)}'] img[src$='#{recipe.user.avatar.small.url}']")
+      expect(page).to have_css("a[href='#{profile_path(recipe.user.id)}'] img[src$='#{recipe.user.avatar.smaller.url}']")
     end
     expect(page).not_to have_content(anime_recipe.title)
   end

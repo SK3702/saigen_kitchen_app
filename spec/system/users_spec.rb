@@ -78,7 +78,7 @@ RSpec.describe "Users", type: :system do
       expect(page).to have_content(user.name)
       expect(page).to have_content(user.email)
       expect(page).to have_content(user.bio)
-      expect(page).to have_selector("img[src*='/assets/default']")
+      expect(page).to have_selector("img[src$='#{user.avatar.url}']")
     end
 
     it "ユーザーの投稿したレシピが最新のレシピから順に表示されていること" do
@@ -132,7 +132,7 @@ RSpec.describe "Users", type: :system do
       fill_in "ユーザーネーム", with: user.name
       fill_in "Email", with: user.email
       fill_in "自己紹介", with: user.bio
-      expect(page).to have_selector("img[src*='/assets/default']")
+      expect(page).to have_selector("img[src$='#{user.avatar.url}']")
     end
 
     it "正しい情報でアカウント情報を更新でき、表示されること" do
