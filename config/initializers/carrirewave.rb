@@ -9,8 +9,12 @@ CarrierWave.configure do |config|
       aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
       region: ENV['AWS_REGION'],
     }
+  elsif Rails.env.test?
+    config.storage = :file
+    config.enable_processing = false
+    config.root = Rails.root.join('public')
   else
     config.storage :file
-    config.enable_processing = false if Rails.env.test?
+    config.enable_processing = false
   end
 end

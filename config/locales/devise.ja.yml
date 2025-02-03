@@ -145,3 +145,4 @@ ja:
       not_saved:
         one: エラーが発生したため %{resource} は保存されませんでした。
         other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
+      extension_allowlist_error: "は許可されていない拡張子です。"

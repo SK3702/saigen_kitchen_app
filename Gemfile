@@ -37,6 +37,7 @@ group :development, :test do
   gem 'pry-doc'
   gem 'pry-byebug'
   gem 'rubocop-airbnb', require: false
+  gem 'shoulda-matchers'
 end
 
 group :development do

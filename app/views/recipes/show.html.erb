@@ -1,0 +1,63 @@
+<section class="bg-white py-md-4 min-vh-80">
+  <div class="container">
+    <div class="row">
+      <div class="bg-white col-lg-10 offset-lg-1 px-4 rounded recipe-area">
+        <h3 class="p-4 border-bottom border-danger mb-0 fw-bold bg-pink"><%= @recipe.title %></h3>
+
+
+        <div class="row mb-3 mt-4">
+          <div class="mb-4 col-md-4">
+            <%= image_tag @recipe.recipe_image.url, class: "img-fluid rounded mx-auto recipe-image-size d-block", alt: "料理画像" %>
+          </div>
+
+          <div class="mb-4 ps-3 col-md-8">
+            <h4 class="mb-3 pb-2 px-2 border-bottom"><strong>作品名(<%= @recipe.category.name %>):</strong> <%= @recipe.work_name %></h4>
+            <div class="d-flex mb-3 ps-1">
+              <%= link_to profile_path(@recipe.user_id), class: "text-decoration-none d-flex" do %>
+                <%= image_tag @user.avatar.url(:small), class: "rounded-circle me-2", alt: "アバター画像" %>
+                <p class="d-flex align-items-center mb-0 text-muted"><%= @recipe.user.name %></p>
+              <% end %>
+            </div>
+
+            <div class="mb-4 px-2">
+              <h4>ポイント・コツ</h4>
+              <p class="mb-2 border-start border-2 ps-3 py-1 text-muted"><%= @recipe.tip %></p>
+            </div>
+            <%= link_to "お気に入り登録", "#", class: "btn me-3 bg-white-btn" %>
+            <% if @is_author %>
+              <%= link_to "編集する", edit_recipe_path(@recipe), class: "text-decoration-none" %>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="row gap-5">
+          <div class="mb-4 col-lg-4">
+            <h4 class="border-bottom pb-2 mb-0">材料</h4>
+            <ul class="list-group">
+            <% @recipe.ingredients.each_with_index do |ingredient, index| %>
+              <li class="pt-3 px-3 d-flex justify-content-between <%= index.even? ? "bg-white" : "bg-light" %>">
+                <p class="text-muted"><%= ingredient.name %></p>
+                <p class="fw-semibold"><%= ingredient.quantity %></p>
+              </li>
+            <% end %>
+            </ul>
+          </div>
+
+          <div class="col-lg-7">
+            <h4 class="border-bottom pb-2 mb-0">作り方</h4>
+            <ol class="list-group">
+              <% @recipe.instructions.order(:step).each_with_index do |instruction, index| %>
+                <li class="pt-3 px-3 <%= index.even? ? "bg-light" : "bg-white" %>">
+                  <div class="row">
+                    <p class="col-2 ms-2 text-white step-circle"><%= instruction.step %></p>
+                    <p class="col-10"><%= instruction.description %></p>
+                  </div>
+                </li>
+              <% end %>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -4,51 +4,49 @@
       <div class="col-lg-4">
         <div class="card mb-4">
           <div class="card-body text-center position-relative">
-            <%= link_to "編集", edit_user_registration_path, class: "position-absolute edit-profile-btn" %>
-            <%= image_tag(current_user.avatar.url, alt: "アバター画像", class: "rounded-circle img-fluid mb-3") %>
+            <% if @user == current_user %>
+              <%= link_to "編集", edit_user_registration_path, class: "position-absolute edit-profile-position" %>
+            <% end %>
+            <%= image_tag(@user.avatar.url, alt: "アバター画像", class: "img-fluid rounded-circle img-fluid mb-3") %>
             <div class="row mb-2">
               <div class="col-sm-4">
                 <p class="mb-0 text-nowrap fw-bold">ユーザー名</p>
               </div>
               <div class="col-sm-8">
-                <p class="text-muted mb-0"><%= current_user.name %></p>
+                <p class="text-muted mb-0"><%= @user.name %></p>
               </div>
             </div>
             <hr>
-            <div class="row mb-2">
-              <div class="col-sm-4">
-                <p class="mb-0 fw-bold">Email</p>
+            <% if @user == current_user %>
+              <div class="row mb-2">
+                <div class="col-sm-4">
+                  <p class="mb-0 fw-bold">Email</p>
+                </div>
+                <div class="col-sm-8">
+                  <p class="text-muted mb-0"><%= @user.email %></p>
+                </div>
               </div>
-              <div class="col-sm-8">
-                <p class="text-muted mb-0"><%= current_user.email %></p>
-              </div>
-            </div>
-            <hr>
+              <hr>
+            <% end %>
             <div>
               <p class="mb-2 fw-bold">プロフィール</p>
-              <p class="text-muted mb-0"><%= current_user.bio %></p>
+              <p class="text-muted mb-0"><%= @user.bio %></p>
             </div>
           </div>
         </div>
       </div>
       <div class="col-lg-8">
-        <h3 class="text-center border-bottom">投稿したレシピ</h3>
-        <div>
-          <ul class="row list-unstyled gx-4 gy-4 ps-5 pe-5">
+        <h3 class="text-center border-bottom border-warning mb-3 pb-1">投稿したレシピ</h3>
+        <ul class="row gx-4 gy-2 ps-5 pe-5">
+          <% @posted_recipes.each do |recipe| %>
             <li class="col-6 col-md-4">
-              <%= image_tag("logocopy.png", class: "img-fluid rounded mb-4") %>
-              <p class="text-center">タイトル</p>
+              <%= link_to recipe_path(recipe.id), class: "text-decoration-none recipe-link" do %>
+                <%= image_tag recipe.recipe_image.thumb.url, class:"img-fluid rounded mb-2 mx-auto d-block object-fit-cover", alt: "料理画像" %>
+                <p class="text-center fw-bold text-dark custom-fs-16px"><%= recipe.title %></p>
+              <% end %>
             </li>
-            <li class="col-6 col-md-4">
-              <%= image_tag("logocopy.png", class: "img-fluid rounded mb-4") %>
-              <p class="text-center">タイトル</p>
-            </li>
-            <li class="col-6 col-md-4">
-              <%= image_tag("logocopy.png", class: "img-fluid rounded mb-4") %>
-              <p class="text-center">タイトル</p>
-            </li>
-          </ul>
-        </div>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>

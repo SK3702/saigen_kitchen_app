@@ -1,4 +1,23 @@
 ja:
-  errors:
-    messages:
-      extension_allowlist_error: "は許可されていない拡張子です"
+  activerecord:
+    models:
+      recipe: "レシピ"
+      ingredient: "材料"
+      instruction: "手順"
+    attributes:
+      recipe:
+        title: "レシピタイトル"
+        work_name: "作品名"
+        recipe_image: "料理画像"
+        tip: "ポイント・コツ"
+        ingredients: "材料"
+        instructions: "手順"
+        category: "カテゴリー"
+      ingredients:
+        name: "材料名"
+        quantity: "分量"
+      instructions:
+        step: "番目"
+        description: "説明"
+      category:
+        name: "カテゴリー名"

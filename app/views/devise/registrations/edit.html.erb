@@ -36,14 +36,14 @@
                   <div class="mb-3 border p-2 rounded">
                     <%= f.label :avatar, "アイコン", class: "mb-2 text-black-50 fs-6 fw-lighter" %>
                     <div class="d-flex">
-                      <%= image_tag @user.avatar.url(:small), class: "me-3", alt: "アバター画像" %>
+                      <%= image_tag @user.avatar.url, class: "me-3", alt: "アバター画像" %>
                       <%= f.file_field :avatar, class: "form-control" %>
                     </div>
                   </div>
                 </div>
                 <div class="col-12">
                   <div class="d-grid my-3">
-                    <%= f.submit "更新する", class: "btn btn-primary btn-lg" %>
+                    <%= f.submit "更新する", class: "btn btn-lg" %>
                   </div>
                 </div>
                 <div class="col-12 text-center">
