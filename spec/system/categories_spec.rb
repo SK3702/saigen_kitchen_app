@@ -29,6 +29,12 @@ RSpec.describe "Categories", type: :system do
     expect(page).to have_content(other_category.name)
   end
 
+  it "選ばれているカテゴリーはバックグラウンドカラーがピンクになること" do
+    within(".nav") do
+      expect(page).to have_css(".bg-pink", text: category.name)
+    end
+  end
+
   it "メインセクションに選択したカテゴリー名が表示されること" do
     within(".category-recipes-area") do
       expect(page).to have_content(category.name)
