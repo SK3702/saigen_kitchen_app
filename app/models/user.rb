@@ -9,4 +9,5 @@ class User < ApplicationRecord
   validates :bio, length: { maximum: 200 }
 
   has_many :recipes, dependent: :destroy
+  has_many :comments, dependent: :destroy
 end

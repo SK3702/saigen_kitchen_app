@@ -22,6 +22,7 @@ class RecipesController < ApplicationController
   def show
     @user = User.find_by(params[:user_id])
     @is_author = current_user == @recipe.user
+    @comment = Comment.new
   end
 
   def edit

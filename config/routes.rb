@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     :passwords => 'users/passwords'
   }
   resources :profiles, only: [:show, :edit, :update]
-  resources :recipes, except: [:index]
+  resources :recipes, except: [:index] do
+    resources :comments, only: [:create, :edit, :update, :destroy]
+  end
   resources :categories, only: [:show]
 end
