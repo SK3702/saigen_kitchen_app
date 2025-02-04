@@ -13,11 +13,18 @@ ja:
         ingredients: "材料"
         instructions: "手順"
         category: "カテゴリー"
+        user: "ユーザー"
       ingredients:
         name: "材料名"
         quantity: "分量"
+        recipe: "レシピ"
       instructions:
         step: "番目"
         description: "説明"
+        recipe: "レシピ"
       category:
         name: "カテゴリー名"
+      comment:
+        content: "コメント内容"
+        user: "ユーザー"
+        recipe: "レシピ"
