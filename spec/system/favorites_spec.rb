@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Recipes", type: :system do
+RSpec.describe "Favorites", type: :system do
   let(:user) { create(:user) }
   let(:recipe) { create(:recipe) }
 
