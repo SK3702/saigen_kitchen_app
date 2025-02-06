@@ -13,6 +13,7 @@ class Recipe < ApplicationRecord
   mount_uploader :recipe_image, RecipeImageUploader
 
   scope :recent, -> { includes(:user).order(created_at: :desc) }
+  scope :more_favorites, -> { left_joins(:favorites).group(:id).order('COUNT(favorites.id) DESC') }
 
   validates :title, presence: true, length: { maximum: 30 }
   validates :work_name, presence: true, length: { maximum: 30 }

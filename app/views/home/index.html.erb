@@ -8,21 +8,28 @@
       <button class="btn me-2" type="submit">Search</button>
     </form>
     <div class="popular-recipes-area">
-      <h2>人気レシピ</h2>
-        <ul class="popular-recipes">
-          <li class="popular-recipe">
-            <%= image_tag("logo_pic.png", class: "recipe-img") %>
-            <p>タイトル</p>
-          </li>
-          <li class="popular-recipe">
-            <%= image_tag("logo_pic.png", class: "recipe-img") %>
-            <p>タイトル</p>
-          </li>
-          <li class="popular-recipe">
-            <%= image_tag("logo_pic.png", class: "recipe-img") %>
-            <p>タイトル</p>
-          </li>
+      <h2 class="border-bottom border-warning mx-3 mb-3 pb-1">人気レシピ</h2>
+      <div class="px-lg-4 align-items-center">
+        <ul class="row gx-5 gy-2 px-lg-3 pe-md-4 px-0 d-md-flex justify-content-between ">
+          <% @favorite_recipes.each do |recipe| %>
+            <li class="flex-md-grow-1 col-10 col-md-4 mx-auto px-3 px-lg-4">
+              <%= link_to recipe_path(recipe.id), class: "text-decoration-none" do %>
+                <div class="mb-1">
+                  <%= image_tag recipe.recipe_image.thumb.url, class:"img-fluid rounded mb-2 mx-auto d-block", alt: "料理画像" %>
+                </div>
+                <p class="text-center fw-bold text-dark mb-0 custom-fs-16px"><%= recipe.title %></p>
+                <p class="text-dark text-center mb-0 custom-fs-14px"><%= recipe.work_name %></p>
+              <% end %>
+              <p class="text-muted text-center">
+                <%= link_to profile_path(recipe.user_id), class: "text-decoration-none" do %>
+                  <%= image_tag(recipe.user.avatar.smaller.url, alt: "アイコン画像", class: "img-fluid rounded-circle border border-muted") %>
+                  <span class="text-dark custom-fs-14px"><%= recipe.user.name %></span>
+                <% end %>
+              </p>
+            </li>
+          <% end %>
         </ul>
+      </div>
     </div>
   </div>
 </section>
