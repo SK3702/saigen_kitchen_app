@@ -50,7 +50,6 @@ RSpec.describe "Home", type: :request do
     end
 
     it "カテゴリーに属するレシピが最新の3つのみ含まれていること" do
-      puts response.body
       expect(response.body).to include(category_recipes[1].title)
       expect(response.body).to include(category_recipes[2].title)
       expect(response.body).to include(category_recipes[3].title)
