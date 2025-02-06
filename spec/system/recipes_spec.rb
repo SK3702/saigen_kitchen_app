@@ -113,10 +113,6 @@ RSpec.describe "Recipes", type: :system do
       expect(current_path).to eq(edit_recipe_path(recipe))
     end
 
-    it "お気に入り登録ボタンが表示されていること" do
-      expect(page).to have_link("お気に入り登録")
-    end
-
     it "ユーザー名をクリックするとプロフィールページに遷移すること" do
       within(".recipe-area") do
         click_link user.name

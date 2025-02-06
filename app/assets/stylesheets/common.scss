@@ -42,7 +42,7 @@ body {
 }
 
 .btn:focus,
-.btn:active{
+.btn:active {
   box-shadow: none !important;
   background-color: #ff907c;
   border: solid 2px #ff907c;
@@ -51,6 +51,8 @@ body {
 .bg-white-btn {
   background-color: white;
   color: #ff907c;
+  border: solid 2px #ff907c;
+  border-radius: 5px;
 }
 
 .object-fit-cover {
@@ -69,6 +71,10 @@ body {
   @media (max-width: 1024px) {
     font-size: 10px;
   }
+}
+
+.text-pink {
+  color: #ff907c;
 }
 
 /* header */

@@ -51,6 +51,8 @@ RSpec.describe Recipe, type: :model do
     it { should belong_to(:category) }
     it { should have_many(:ingredients).dependent(:destroy) }
     it { should have_many(:instructions).dependent(:destroy) }
+    it { should have_many(:favorites).dependent(:destroy) }
+    it { should have_many(:favorited_by).through(:favorites).source(:user) }
   end
 
   describe 'スコープのテスト' do

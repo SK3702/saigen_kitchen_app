@@ -1,0 +1,31 @@
+<section class="bg-light py-lg-5 min-vh-80">
+  <div class="container col-lg-8">
+      <h3 class="text-center border-bottom border-warning mb-3 pb-1">お気に入りレシピ一覧</h3>
+    <% if @favorite_recipes.any? %>
+          <ul class="row gx-4 gy-2 ps-5 pe-5">
+            <% @favorite_recipes.each do |recipe| %>
+              <li class="col-6 col-md-4">
+                <%= link_to recipe_path(recipe.id), class: "text-decoration-none recipe-link" do %>
+                  <div class="mb-1">
+                    <%= image_tag recipe.recipe_image.thumb.url, class:"img-fluid rounded mb-2 mx-auto d-block", alt: "料理画像" %>
+                  </div>
+                  <p class="text-center fw-bold text-dark mb-0 custom-fs-16px"><%= recipe.title %></p>
+                  <p class="text-dark text-center mb-0 custom-fs-14px"><%= recipe.work_name %></p>
+                <% end %>
+                <p class="text-muted text-center">
+                  <%= link_to profile_path(recipe.user_id), class: "text-decoration-none user-link" do %>
+                    <%= image_tag(recipe.user.avatar.smaller.url, alt: "アイコン画像", class: "img-fluid rounded-circle border border-muted") %>
+                    <span class="text-dark custom-fs-14px"><%= recipe.user.name %></span>
+                  <% end %>
+                </p>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+    <% else %>
+      <div class="alert alert-info" role="alert">
+        お気に入りのレシピはまだありません。
+      </div>
+    <% end %>
+  </div>
+</section>

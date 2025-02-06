@@ -1,0 +1,30 @@
+<% if current_user && current_user.favorite?(recipe) %>
+  <%= link_to recipe_favorite_path(recipe),
+              method: :delete, remote: true,
+              data: { turbolinks: false },
+              class: "btn bg-white-btn d-flex align-items-center justify-content-center favorite-btn" do %>
+    <i class="bi bi-heart-fill fs-5 me-1" aria-hidden="true"></i>
+    <span class="text-dark">お気に入り</span>
+  <% end %>
+<% elsif current_user %>
+  <%= link_to recipe_favorite_path(recipe),
+              method: :post, remote: true,
+              data: { turbolinks: false },
+              class: "btn bg-white-btn d-flex align-items-center justify-content-center favorite-btn" do %>
+    <i class="bi bi-heart fs-5 me-1" aria-hidden="true"></i>
+    <span class="text-dark">お気に入り</span>
+  <% end %>
+<% else %>
+  <div class="nav-item dropdown">
+    <%= link_to "#",
+      class: "bg-white-btn d-flex align-items-center justify-content-center nav-link px-2 py-1 favorite-btn",
+      role: "button",
+      data: { bs_toggle: "dropdown" } do %>
+        <i class="bi bi-heart fs-5 me-1 text-pink" aria-hidden="true"></i>
+        <span class="text-dark">お気に入り</span>
+    <% end %>
+    <ul class="dropdown-menu border-0 py-0">
+      <li><p class="text-danger mt-1">ログインしてください</li>
+    </ul>
+  </div>
+<% end %>

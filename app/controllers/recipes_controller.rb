@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :favorites]
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
   before_action :authorize_user, only: [:edit, :update, :destroy]
   before_action :get_categoties, onlu: [:new, :edit]
@@ -39,6 +39,10 @@ class RecipesController < ApplicationController
   def destroy
     @recipe.destroy
     redirect_to profile_path(current_user.id)
+  end
+
+  def favorites
+    @favorite_recipes = current_user.favorite_recipes.includes(:user).order(created_at: :desc)
   end
 
   private

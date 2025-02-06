@@ -108,6 +108,10 @@ RSpec.describe "Recipes", type: :request do
         )
         expect(response.body).not_to include(other_recipe.title)
       end
+
+      it "お気に入りボタンが含まれていること" do
+        expect(response.body).to include("お気に入り")
+      end
     end
   end
 
@@ -225,6 +229,38 @@ RSpec.describe "Recipes", type: :request do
           delete recipe_path(recipe)
           expect(response).to redirect_to(new_user_session_path)
         end
+      end
+    end
+  end
+
+  describe "お気に入りレシピページ" do
+    before { get favorites_recipes_path }
+    let!(:favorite) { create(:favorite, user_id: user.id, recipe_id: other_user_recipe.id) }
+
+    it "レスポンスが正常であること" do
+      expect(response).to have_http_status(200)
+    end
+
+    it "見出しのお気に入りレシピ一覧が含まれていること" do
+      expect(response.body).to include("お気に入りレシピ一覧")
+    end
+
+    context "お気に入りレシピがある場合" do
+      it "お気に入りレシピの情報が含まれていること" do
+        get favorites_recipes_path
+
+        expect(response.body).to include(
+          other_user_recipe.title,
+          other_user_recipe.work_name,
+          "src=\"#{other_user_recipe.recipe_image.thumb.url}\"",
+          "src=\"#{other_user.avatar.smaller.url}\"",
+        )
+      end
+    end
+
+    context "お気に入りのレシピがない場合" do
+      it "レシピ情報が含まれていないこと" do
+        expect(response.body).to include("お気に入りのレシピはまだありません。")
       end
     end
   end
