@@ -36,10 +36,11 @@ RSpec.describe "Home", type: :request do
       html = Nokogiri::HTML(response.body)
       popular_section = html.at_css('.popular-recipes-area')
       popular_text = popular_section.text
-      expect(response.body).to include(recipes[1].title)
-      expect(response.body).to include(recipes[2].title)
-      expect(response.body).to include(recipes[3].title)
-      expect(response.body).not_to include(recipes[0].title)
+
+      expect(popular_text).to include(recipes[1].title)
+      expect(popular_text).to include(recipes[2].title)
+      expect(popular_text).to include(recipes[3].title)
+      expect(popular_text).not_to include(recipes[0].title)
     end
 
     it "各カテゴリのレシピセクションが表示されていること" do
