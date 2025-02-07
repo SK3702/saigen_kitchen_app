@@ -47,6 +47,7 @@ RSpec.describe User, type: :model do
 
   describe "アソシエーションのテスト" do
     it { should have_many(:recipes) }
+    it { should have_many(:comments) }
     it { should have_many(:favorites).dependent(:destroy) }
     it { should have_many(:favorite_recipes).through(:favorites).source(:recipe) }
   end
