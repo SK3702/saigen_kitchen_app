@@ -159,10 +159,8 @@ footer {
 }
 
 .recipe-image-size {
-  max-width: 320px;
   max-height: 320px;
   min-width: 250px;
-  min-height: 250px;
   object-fit: cover;
 }
 
@@ -184,10 +182,8 @@ footer {
 
 @media (max-width: 1024px) {
   .recipe-image-size {
-    max-width: 230px;
     max-height: 230px;
     min-width: 200px;
-    min-height: 200px;
     object-fit: cover;
   }
 }

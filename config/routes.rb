@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'favorites/create'
-  get 'favorites/destroy'
   root 'home#index'
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
@@ -9,7 +7,7 @@ Rails.application.routes.draw do
   }
   resources :profiles, only: [:show, :edit, :update]
   resources :recipes, except: [:index] do
-    resources :comments, only: [:create, :edit, :update, :destroy]
+    resources :comments, only: [:create, :destroy]
     resource :favorite, only: [:create, :destroy]
     get :favorites, on: :collection
   end

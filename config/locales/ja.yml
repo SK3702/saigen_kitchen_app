@@ -4,6 +4,9 @@ ja:
       recipe: "レシピ"
       ingredient: "材料"
       instruction: "手順"
+      category: "カテゴリー"
+      comment: "コメント"
+      favorite: "お気に入り"
     attributes:
       recipe:
         title: "レシピタイトル"
@@ -14,6 +17,7 @@ ja:
         instructions: "手順"
         category: "カテゴリー"
         user: "ユーザー"
+        favorite: "お気に入り"
       ingredients:
         name: "材料名"
         quantity: "分量"
