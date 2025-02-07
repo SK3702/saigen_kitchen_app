@@ -14,7 +14,7 @@
             <h4 class="mb-3 pb-2 px-2 border-bottom"><strong>作品名(<%= @recipe.category.name %>):</strong> <%= @recipe.work_name %></h4>
             <div class="d-flex mb-3 ps-1">
               <%= link_to profile_path(@recipe.user_id), class: "text-decoration-none d-flex" do %>
-                <%= image_tag @user.avatar.url(:small), class: "rounded-circle me-2", alt: "アバター画像" %>
+                <%= image_tag @recipe.user.avatar.url(:small), class: "rounded-circle me-2", alt: "アバター画像" %>
                 <p class="d-flex align-items-center mb-0 text-muted"><%= @recipe.user.name %></p>
               <% end %>
             </div>
@@ -23,9 +23,11 @@
               <h4>ポイント・コツ</h4>
               <p class="mb-2 border-start border-2 ps-3 py-1 text-muted"><%= @recipe.tip %></p>
             </div>
-            <%= link_to "お気に入り登録", "#", class: "btn me-3 bg-white-btn" %>
+            <div id="favorite-buttons-<%= @recipe.id %>" class="d-inline-block">
+              <%= render "favorites/btn", recipe: @recipe %>
+            </div>
             <% if @is_author %>
-              <%= link_to "編集する", edit_recipe_path(@recipe), class: "text-decoration-none" %>
+              <%= link_to "編集する", edit_recipe_path(@recipe), class: "text-decoration-none d-inline-block" %>
             <% end %>
           </div>
         </div>

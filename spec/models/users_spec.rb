@@ -47,5 +47,26 @@ RSpec.describe User, type: :model do
 
   describe "アソシエーションのテスト" do
     it { should have_many(:recipes) }
+    it { should have_many(:favorites).dependent(:destroy) }
+    it { should have_many(:favorite_recipes).through(:favorites).source(:recipe) }
+  end
+
+  describe "#favorite?" do
+    let(:recipe) { create(:recipe) }
+    let(:user) { create(:user) }
+
+    context "お気に入りに追加されている場合" do
+      let!(:favorite) { create(:favorite, user_id: user.id, recipe_id: recipe.id) }
+
+      it "true を返すこと" do
+        expect(user.favorite?(recipe)).to be true
+      end
+    end
+
+    context "お気に入りに追加されていない場合" do
+      it "false を返すこと" do
+        expect(user.favorite?(recipe)).to be false
+      end
+    end
   end
 end

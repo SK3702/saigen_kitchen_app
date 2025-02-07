@@ -51,14 +51,22 @@ RSpec.describe Recipe, type: :model do
     it { should belong_to(:category) }
     it { should have_many(:ingredients).dependent(:destroy) }
     it { should have_many(:instructions).dependent(:destroy) }
+    it { should have_many(:favorites).dependent(:destroy) }
+    it { should have_many(:favorited_by).through(:favorites).source(:user) }
   end
 
   describe 'スコープのテスト' do
     let!(:older_recipe) { create(:recipe, created_at: 1.day.ago) }
     let!(:newer_recipe) { create(:recipe, created_at: Time.zone.now) }
+    let(:user) { create(:user) }
+    let!(:favorite) { create(:favorite, user_id: user.id, recipe_id: newer_recipe.id) }
 
     it 'recentスコープで新しい順に取得できること' do
       expect(Recipe.recent).to eq [newer_recipe, older_recipe]
+    end
+
+    it "more_favoritesで人気順に取得できること" do
+      expect(Recipe.more_favorites).to eq [newer_recipe, older_recipe]
     end
   end
 end

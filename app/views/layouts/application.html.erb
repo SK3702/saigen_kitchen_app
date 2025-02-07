@@ -35,7 +35,7 @@
                               data: { bs_toggle: "dropdown" },
                               aria: { expanded: "false" } %>
                   <ul class="dropdown-menu dropdown-menu-end text-center">
-                    <li><%= link_to "お気に入りレシピ", "#", class: "dropdown-item" %></li>
+                    <li><%= link_to "お気に入りレシピ", favorites_recipes_path(user_id: current_user.id), class: "dropdown-item" %></li>
                     <li><%= link_to "アカウント情報", profile_path(current_user.id), class: "dropdown-item" %></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>

@@ -9,5 +9,6 @@ class HomeController < ApplicationController
         recipes: category.recipes.recent.limit(TOP_PAGE_RECIPE_COUNT),
       }
     end
+    @favorite_recipes = Recipe.more_favorites.limit(TOP_PAGE_RECIPE_COUNT)
   end
 end

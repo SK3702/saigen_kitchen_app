@@ -4,6 +4,8 @@ class Recipe < ApplicationRecord
   has_many :ingredients, dependent: :destroy
   has_many :instructions, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :favorited_by, through: :favorites, source: :user
 
   accepts_nested_attributes_for :ingredients, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :instructions, allow_destroy: true, reject_if: :all_blank
@@ -11,6 +13,7 @@ class Recipe < ApplicationRecord
   mount_uploader :recipe_image, RecipeImageUploader
 
   scope :recent, -> { includes(:user).order(created_at: :desc) }
+  scope :more_favorites, -> { left_joins(:favorites).group(:id).order('COUNT(favorites.id) DESC') }
 
   validates :title, presence: true, length: { maximum: 30 }
   validates :work_name, presence: true, length: { maximum: 30 }
