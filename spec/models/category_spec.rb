@@ -6,6 +6,6 @@ RSpec.describe Category, type: :model do
   end
 
   describe "バリデーションのテスト" do
-    it { should validate_presence_of(:content).with_message("を入力してください") }
+    it { should validate_presence_of(:name).with_message("を入力してください") }
   end
 end
