@@ -15,6 +15,6 @@ CarrierWave.configure do |config|
     config.root = Rails.root.join('public')
   else
     config.storage :file
-    config.enable_processing = false
+    config.enable_processing = true
   end
 end
