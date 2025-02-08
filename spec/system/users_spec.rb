@@ -41,6 +41,10 @@ RSpec.describe "Users", type: :system do
       expect(page).to have_content("パスワードは6文字以上で入力してください")
       expect(page).to have_content("パスワード（確認用）とパスワードの入力が一致しません")
     end
+
+    it "ブラウザタブのタイトルが正しく表示されること" do
+      expect(page).to have_title "新規登録 - 再現Kitchen"
+    end
   end
 
   describe "ログイン" do
@@ -65,6 +69,10 @@ RSpec.describe "Users", type: :system do
 
       expect(current_path).to eq new_user_session_path
       expect(page).to have_content("Eメールまたはパスワードが違います")
+    end
+
+    it "ブラウザタブのタイトルが正しく表示されること" do
+      expect(page).to have_title "ログイン - 再現Kitchen"
     end
   end
 
@@ -118,6 +126,10 @@ RSpec.describe "Users", type: :system do
         expect(page).not_to have_content(user.email)
       end
     end
+
+    it "ブラウザタブのタイトルが正しく表示されること" do
+      expect(page).to have_title "#{user.name} - 再現Kitchen"
+    end
   end
 
   describe "アカウント情報編集" do
@@ -162,16 +174,17 @@ RSpec.describe "Users", type: :system do
       expect(page).to have_content("Eメールは不正な値です")
       expect(page).to have_content("許可されていない拡張子です")
     end
+
+    it "ブラウザタブのタイトルが正しく表示されること" do
+      expect(page).to have_title "プロフィール編集 - 再現Kitchen"
+    end
   end
 
   describe "ログアウト" do
-    before do
+    it "ユーザーがログアウトできること" do
       sign_in(user)
       visit root_path
       click_link "ログアウト"
-    end
-
-    it "ユーザーがログアウトできること" do
       expect(page).to have_content("ログアウトしました。")
       expect(page).to have_content("ログイン")
     end

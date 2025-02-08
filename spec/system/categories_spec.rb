@@ -68,4 +68,8 @@ RSpec.describe "Categories", type: :system do
     all('.user-link').first.click
     expect(current_path).to eq profile_path(manga_recipes[0].user.id)
   end
+
+  it "ブラウザタブのタイトルが正しく表示されること" do
+    expect(page).to have_title "#{category.name} - 再現Kitchen"
+  end
 end

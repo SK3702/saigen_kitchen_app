@@ -78,5 +78,9 @@ RSpec.describe "Favorites", type: :system do
       expect(display_recipes.first).to have_content(other_recipe.title)
       expect(display_recipes.last).to have_content(recipe.title)
     end
+
+    it "ブラウザタブのタイトルが正しく表示されること" do
+      expect(page).to have_title "お気に入りレシピ - 再現Kitchen"
+    end
   end
 end
