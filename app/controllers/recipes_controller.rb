@@ -45,6 +45,14 @@ class RecipesController < ApplicationController
     @favorite_recipes = current_user.favorite_recipes.includes(:user).order(created_at: :desc)
   end
 
+  def search
+    if params[:keyword].present?
+      @recipes = Recipe.search(params[:keyword])
+    else
+      @recipes = Recipe.none
+    end
+  end
+
   private
 
   def recipe_params

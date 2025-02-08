@@ -70,4 +70,33 @@ RSpec.describe Recipe, type: :model do
       expect(Recipe.more_favorites).to eq [newer_recipe, older_recipe]
     end
   end
+
+  describe "関数.searchのテスト" do
+    let!(:recipe1) { create(:recipe, title: "レシピ1", work_name: "ab") }
+    let!(:recipe2) { create(:recipe, title: "レシピ2", work_name: "ac") }
+    let!(:recipe3) { create(:recipe, title: "テスト3", work_name: "bc") }
+    let!(:recipe4) { create(:recipe, title: "レシピ4", work_name: "cd") }
+
+    context "検索キーワードが入力されたとき" do
+      it "全てのキーワードにマッチするレシピが取得できること" do
+        results = Recipe.search("レシピ a")
+        expect(results).to include(recipe1)
+        expect(results).to include(recipe2)
+        expect(results).not_to include(recipe3)
+        expect(results).not_to include(recipe4)
+      end
+
+      it "キーワードにマッチするレシピがない場合、何も取得できないこと" do
+        results = Recipe.search("nonexistent_keyword")
+        expect(results).to be_empty
+      end
+    end
+
+    context "検索キーワードが空欄の時" do
+      it "noneを返すこと" do
+        results = Recipe.search("")
+        expect(results).to be_empty
+      end
+    end
+  end
 end

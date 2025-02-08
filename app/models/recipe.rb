@@ -15,6 +15,17 @@ class Recipe < ApplicationRecord
   scope :recent, -> { includes(:user).order(created_at: :desc) }
   scope :more_favorites, -> { left_joins(:favorites).group(:id).order('COUNT(favorites.id) DESC') }
 
+  def self.search(search)
+    if search.present?
+      keywords = search.split(/[[:blank:]]+/)
+      conditions = keywords.map { "(title LIKE ? OR work_name LIKE ?)" }.join(" AND ")
+      values = keywords.flat_map { |keyword| ["%#{keyword}%", "%#{keyword}%"] }
+      where(conditions, *values)
+    else
+      none
+    end
+  end
+
   validates :title, presence: true, length: { maximum: 30 }
   validates :work_name, presence: true, length: { maximum: 30 }
   validates :recipe_image, presence: true
