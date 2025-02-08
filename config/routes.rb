@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
     resource :favorite, only: [:create, :destroy]
     get :favorites, on: :collection
+    get :search, on: :collection
   end
   resources :categories, only: [:show]
 end

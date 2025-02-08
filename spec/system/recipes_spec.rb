@@ -224,4 +224,21 @@ RSpec.describe "Recipes", type: :system do
       expect(page).not_to have_content(recipe.title)
     end
   end
+
+  describe "レシピ検索" do
+    let!(:recipe1) { create(:recipe, title: "レシピ1", work_name: "ab") }
+    let!(:recipe2) { create(:recipe, title: "テスト2", work_name: "bc") }
+
+    it "キーワードにマッチするレシピ情報が表示されること" do
+      visit search_recipes_path
+      fill_in "keyword", with: "レシピ b"
+      click_button "検索"
+      expect(page).to have_content(recipe1.title)
+      expect(page).to have_content(recipe1.work_name)
+      expect(page).to have_selector("img[src$='#{recipe1.recipe_image.thumb.url}']")
+      expect(page).to have_content(recipe1.user.name)
+      expect(page).to have_selector("img[src$='#{recipe1.user.avatar.smaller.url}']")
+      expect(page).not_to have_content(recipe2.title)
+    end
+  end
 end

@@ -3,10 +3,10 @@
     <div class="bg-yellow py-5">
       <%= image_tag("first-view-logo.png", class: "d-block col-lg-5 col-md-7 col-9 mx-auto", alt: "ファーストビューロゴ") %>
     </div>
-    <form class="d-flex col-md-6 offset-md-3 mt-5" role="search">
-      <input class="form-control form-control-lg mx-2 search-bar" type="search" placeholder="作品名、料理名" aria-label="Search">
-      <button class="btn me-2" type="submit">Search</button>
-    </form>
+    <%= form_with url: search_recipes_path, method: :get, local: true, html: {class: "d-flex col-md-6 offset-md-3 mt-5", role: "search"} do |f| %>
+      <%= f.text_field :keyword, class: "form-control form-control-lg mx-2 search-bar shadow-sm rounded", placeholder: "作品名、料理名", "aria-label": "Search" %>
+      <%= f.submit "検索", class: "btn me-2 rounded" %>
+    <% end %>
     <div class="popular-recipes-area col-10 offset-1">
       <h2 class="border-bottom border-warning mx-md-3 mb-3 mt-4 pb-1">人気レシピ</h2>
       <div class="px-lg-4 align-items-center">

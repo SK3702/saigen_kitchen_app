@@ -234,33 +234,63 @@ RSpec.describe "Recipes", type: :request do
   end
 
   describe "お気に入りレシピページ" do
-    before { get favorites_recipes_path }
-    let!(:favorite) { create(:favorite, user_id: user.id, recipe_id: other_user_recipe.id) }
+    describe "GET /recipes/favorites" do
+      before { get favorites_recipes_path }
+      let!(:favorite) { create(:favorite, user_id: user.id, recipe_id: other_user_recipe.id) }
 
-    it "レスポンスが正常であること" do
-      expect(response).to have_http_status(200)
-    end
+      it "レスポンスが正常であること" do
+        expect(response).to have_http_status(200)
+      end
 
-    it "見出しのお気に入りレシピ一覧が含まれていること" do
-      expect(response.body).to include("お気に入りレシピ一覧")
-    end
+      it "見出しのお気に入りレシピ一覧が含まれていること" do
+        expect(response.body).to include("お気に入りレシピ一覧")
+      end
 
-    context "お気に入りレシピがある場合" do
-      it "お気に入りレシピの情報が含まれていること" do
-        get favorites_recipes_path
+      context "お気に入りレシピがある場合" do
+        it "お気に入りレシピの情報が含まれていること" do
+          get favorites_recipes_path
 
-        expect(response.body).to include(
-          other_user_recipe.title,
-          other_user_recipe.work_name,
-          "src=\"#{other_user_recipe.recipe_image.thumb.url}\"",
-          "src=\"#{other_user.avatar.smaller.url}\"",
-        )
+          expect(response.body).to include(
+            other_user_recipe.title,
+            other_user_recipe.work_name,
+            "src=\"#{other_user_recipe.recipe_image.thumb.url}\"",
+            "src=\"#{other_user.avatar.smaller.url}\"",
+          )
+        end
+      end
+
+      context "お気に入りのレシピがない場合" do
+        it "レシピ情報が含まれていないこと" do
+          expect(response.body).to include("お気に入りのレシピはまだありません。")
+        end
       end
     end
+  end
 
-    context "お気に入りのレシピがない場合" do
-      it "レシピ情報が含まれていないこと" do
-        expect(response.body).to include("お気に入りのレシピはまだありません。")
+  describe "検索機能" do
+    describe "GET /recipes/search" do
+      let!(:recipe1) { create(:recipe, title: "レシピ1", work_name: "ab") }
+      let!(:recipe2) { create(:recipe, title: "テスト2", work_name: "bc") }
+
+      context "検索キーワードが存在する場合" do
+        it "キーワードにマッチするデータを返すこと" do
+          get search_recipes_path, params: { keyword: "レシピ ab" }
+
+          expect(response).to have_http_status(200)
+          expect(response.body).to include("レシピ1")
+          expect(response.body).to include("ab")
+          expect(response.body).not_to include("テスト2")
+        end
+      end
+
+      context "検索キーワードが空白の場合" do
+        it "何もデータを返さないこと" do
+          get search_recipes_path, params: { keyword: "" }
+
+          expect(response).to have_http_status(200)
+          expect(response.body).not_to include("レシピ1")
+          expect(response.body).not_to include("テスト2")
+        end
       end
     end
   end

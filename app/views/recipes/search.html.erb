@@ -1,0 +1,33 @@
+<div class="container">
+  <%= form_with url: search_recipes_path, method: :get, local: true, html: {class: "d-flex col-md-6 offset-md-3 my-5", role: "search"} do |f| %>
+    <%= f.text_field :keyword, value: params[:keyword], class: "form-control form-control-lg mx-2 search-bar shadow-sm rounded", placeholder: "作品名、料理名", "aria-label": "Search" %>
+    <%= f.submit "検索", class: "btn me-2 rounded" %>
+  <% end %>
+
+  <div class="col-10 offset-1">
+    <h2 class="text-center border-bottom border-warning pb-2 mb-5 ">"<%= params[:keyword] %>"に関するレシピ</h2>
+    <% if @recipes.present? %>
+      <ul class="row gx-4 gy-2 ps-lg-5 pe-lg-5 px-1">
+        <% @recipes.each do |recipe| %>
+          <li class="col-6 col-md-4">
+            <%= link_to recipe_path(recipe.id), class: "text-decoration-none recipe-link" do %>
+              <%= image_tag recipe.recipe_image.thumb.url, class:"img-fluid rounded mb-2 mx-auto d-block object-fit-cover", alt: "料理画像" %>
+              <p class="text-center fw-bold text-dark mb-0 custom-fs-16px"><%= recipe.title %></p>
+              <p class="text-dark text-center mb-0 custom-fs-14px"><%= recipe.work_name %></p>
+            <% end %>
+            <p class="text-muted text-center">
+              <%= link_to profile_path(recipe.user.id), class: "text-decoration-none user-link" do %>
+                <%= image_tag(recipe.user.avatar.smaller.url, alt: "アイコン画像", class: "img-fluid rounded-circle border border-muted") %>
+                <span class="text-dark custom-fs-14px"><%= recipe.user.name %></span>
+              <% end %>
+            </p>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <div class="alert alert-info">
+        <span>検索結果が見つかりませんでした</span>
+      </div>
+    <% end %>
+  </div>
+</div>
