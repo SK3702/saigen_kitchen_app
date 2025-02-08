@@ -1,3 +1,4 @@
+<%= provide(:title, "レシピ検索")%>
 <div class="container">
   <%= form_with url: search_recipes_path, method: :get, local: true, html: {class: "d-flex col-md-6 offset-md-3 my-5", role: "search"} do |f| %>
     <%= f.text_field :keyword, value: params[:keyword], class: "form-control form-control-lg mx-2 search-bar shadow-sm rounded", placeholder: "作品名、料理名", "aria-label": "Search" %>

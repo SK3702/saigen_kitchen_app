@@ -83,6 +83,10 @@ RSpec.describe "Recipes", type: :system do
 
       expect(page).to have_field("recipe[instructions_attributes][1][description]")
     end
+
+    it "ブラウザタブのタイトルが正しく表示されること" do
+      expect(page).to have_title "レシピ作成 - 再現Kitchen"
+    end
   end
 
   describe "レシピ詳細ページ" do
@@ -126,6 +130,10 @@ RSpec.describe "Recipes", type: :system do
         visit recipe_path(recipe.id)
         expect(page).not_to have_link("編集する", href: edit_recipe_path(recipe))
       end
+    end
+
+    it "ブラウザタブのタイトルが正しく表示されること" do
+      expect(page).to have_title "#{recipe.title} - 再現Kitchen"
     end
   end
 
@@ -223,14 +231,19 @@ RSpec.describe "Recipes", type: :system do
       expect(current_path).to eq(profile_path(user))
       expect(page).not_to have_content(recipe.title)
     end
+
+    it "ブラウザタブのタイトルが正しく表示されること" do
+      expect(page).to have_title "レシピ編集 - 再現Kitchen"
+    end
   end
 
   describe "レシピ検索" do
     let!(:recipe1) { create(:recipe, title: "レシピ1", work_name: "ab") }
     let!(:recipe2) { create(:recipe, title: "テスト2", work_name: "bc") }
 
+    before { visit search_recipes_path }
+
     it "キーワードにマッチするレシピ情報が表示されること" do
-      visit search_recipes_path
       fill_in "keyword", with: "レシピ b"
       click_button "検索"
       expect(page).to have_content(recipe1.title)
@@ -239,6 +252,10 @@ RSpec.describe "Recipes", type: :system do
       expect(page).to have_content(recipe1.user.name)
       expect(page).to have_selector("img[src$='#{recipe1.user.avatar.smaller.url}']")
       expect(page).not_to have_content(recipe2.title)
+    end
+
+    it "ブラウザタブのタイトルが正しく表示されること" do
+      expect(page).to have_title "レシピ検索 - 再現Kitchen"
     end
   end
 end
