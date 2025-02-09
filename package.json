@@ -16,7 +16,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
-    "sass-loader": "^16.0.4",
+    "sass-loader": "8.0.2",
     "webpack-dev-server": "^3"
   },
   "engines": {
