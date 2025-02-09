@@ -13,4 +13,5 @@ Rails.application.routes.draw do
     get :search, on: :collection
   end
   resources :categories, only: [:show]
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 end

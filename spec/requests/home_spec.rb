@@ -56,5 +56,29 @@ RSpec.describe "Home", type: :request do
       expect(response.body).to include(category_recipes[3].title)
       expect(response.body).not_to include(recipes[0].title)
     end
+
+    context "管理者ユーザーの場合" do
+      let(:admin_user) { create(:user, admin: true) }
+
+      it "管理者ページへのリンクが含まれていること" do
+        sign_in admin_user
+        get root_path
+        expect(response.body).to include("管理者ログイン")
+      end
+    end
+
+    context "管理者ユーザー以外の場合" do
+      let(:user) { create(:user, admin: false) }
+
+      it "一般ユーザーの場合、管理者ページへのリンクが含まれていないこと" do
+        sign_in user
+        get root_path
+        expect(response.body).not_to include("管理者ログイン")
+      end
+
+      it "未ログインユーザーの場合、管理者ページへのリンクが含まれていないこと" do
+        expect(response.body).not_to include("管理者ログイン")
+      end
+    end
   end
 end

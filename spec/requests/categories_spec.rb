@@ -11,7 +11,7 @@ RSpec.describe "Categories", type: :request do
       get category_path(categories[0].id)
     end
 
-    it "HTTPステータスコード200を返すこと" do
+    it "レスポンスが正常であること" do
       expect(response).to have_http_status(200)
     end
 

@@ -69,9 +69,11 @@
 
     <%= yield %>
 
-
   </body>
 
   <footer class="bg-yellow">
+    <% if current_user.try(:admin?) %>
+      <%= link_to '管理者ログイン', rails_admin_path %>
+    <% end %>
   </footer>
 </html>
