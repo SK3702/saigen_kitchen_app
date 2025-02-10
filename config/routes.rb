@@ -14,4 +14,7 @@ Rails.application.routes.draw do
   end
   resources :categories, only: [:show]
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  devise_scope :user do
+    post 'users/guest_log_in', to: 'users/sessions#guest_log_in'
+  end
 end

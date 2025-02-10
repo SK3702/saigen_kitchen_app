@@ -16,4 +16,11 @@ class User < ApplicationRecord
   def favorite?(recipe)
     favorite_recipes.include?(recipe)
   end
+
+  def self.guest
+    find_or_create_by!(email: 'guest@guest.mail') do |user|
+      user.name = 'ゲストユーザー'
+      user.password = SecureRandom.urlsafe_base64
+    end
+  end
 end
