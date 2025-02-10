@@ -13,7 +13,7 @@ RSpec.describe ContactMailer, type: :mailer do
       expect(mail.to).to eq([ENV['GOOGLE_MAIL_ADDRESS']])
     end
 
-    it "メール本文に問い合わせ内容が含まれていること" do
+    it "メール本文に名前、メールアドレス、件名、問い合わせ内容が含まれていること" do
       expect(mail.body.encoded).to include(contact.name)
       expect(mail.body.encoded).to include(contact.email)
       expect(mail.body.encoded).to include(contact.subject)
