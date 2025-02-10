@@ -37,7 +37,7 @@ RSpec.describe "Users", type: :system do
       expect(current_path).to eq user_registration_path
       expect(page).to have_content("エラーが発生したため ユーザー は保存されませんでした。")
       expect(page).to have_content("ユーザーネームを入力してください")
-      expect(page).to have_content("Eメールは不正な値です")
+      expect(page).to have_content("メールアドレスは不正な値です")
       expect(page).to have_content("パスワードは6文字以上で入力してください")
       expect(page).to have_content("パスワード（確認用）とパスワードの入力が一致しません")
     end
@@ -68,7 +68,7 @@ RSpec.describe "Users", type: :system do
       click_button "ログイン"
 
       expect(current_path).to eq new_user_session_path
-      expect(page).to have_content("Eメールまたはパスワードが違います")
+      expect(page).to have_content("メールアドレスまたはパスワードが違います")
     end
 
     it "ブラウザタブのタイトルが正しく表示されること" do
@@ -171,7 +171,7 @@ RSpec.describe "Users", type: :system do
       click_button "更新する"
 
       expect(page).to have_content("ユーザーネームを入力してください")
-      expect(page).to have_content("Eメールは不正な値です")
+      expect(page).to have_content("メールアドレスは不正な値です")
       expect(page).to have_content("許可されていない拡張子です")
     end
 

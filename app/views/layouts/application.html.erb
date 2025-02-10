@@ -74,9 +74,12 @@
 
   </body>
 
-  <footer class="bg-yellow">
+  <footer class="bg-yellow px-md-5 px-3 py-2">
     <% if current_user.try(:admin?) %>
       <%= link_to '管理者ログイン', rails_admin_path %>
     <% end %>
+    <div class="d-flex">
+     <p>お問い合わせは<span><%= link_to "こちら", new_contact_path, class:"text-decoration-none" %></span></p>
+    </div>
   </footer>
 </html>
