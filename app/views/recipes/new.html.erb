@@ -9,12 +9,12 @@
             <%= render "shared/error_messages", object: @recipe %>
             <div class="mb-3 pt-2">
               <%= form.label :title, "レシピタイトル", class: "form-label" %>
-              <%= form.text_field :title, class: "form-control", placeholder: "例: 〇〇のトマトパスタ" %>
+              <%= form.text_field :title, class: "form-control", placeholder: "例: 〇〇のトマトパスタ(30文字以内)" %>
             </div>
             <div class="row">
               <div class="mb-3 col-7">
                 <%= form.label :work_name, "作品名", class: "form-label" %>
-                <%= form.text_field :work_name, class: "form-control", placeholder: "例: ワンピース" %>
+                <%= form.text_field :work_name, class: "form-control", placeholder: "例: ワンピース(30文字以内)" %>
               </div>
               <div class="mb-3 col-5">
                 <%= form.label :category_id, "カテゴリー", class:"form-label d-block" %>
@@ -52,10 +52,10 @@
                   <div class="ingredient-group">
                     <div class="row g-3 mb-3 align-items-end">
                       <div class="col-6">
-                        <%= form.text_field "ingredients_attributes[#{index}][name]", value: ingredient.name, class: "form-control", placeholder: "例: トマト" %>
+                        <%= form.text_field "ingredients_attributes[#{index}][name]", value: ingredient.name, class: "form-control", placeholder: "例: トマト(20文字以内)" %>
                       </div>
                       <div class="col-5">
-                        <%= form.text_field "ingredients_attributes[#{index}][quantity]", value: ingredient.quantity, class: "form-control", placeholder: "例: 100g" %>
+                        <%= form.text_field "ingredients_attributes[#{index}][quantity]", value: ingredient.quantity, class: "form-control", placeholder: "例: 100g(20文字以内)" %>
                       </div>
                       <div class="col-1">
                         <button type="button", class="btn-close mb-2 remove-ingredient", aria-label="Close"></button>
@@ -75,7 +75,7 @@
                     <div class="row g-3 mb-3 align-items-end">
                       <div class="col-11">
                         <%= form.label :description, "手順 #{index + 1}", class: "form-label" %>
-                        <%= form.text_area "instructions_attributes[#{index}][description]", value: instruction.description, class: "form-control", rows: 2, placeholder: "例: フライパンにオリーブオイルを熱し、トマトを炒める" %>
+                        <%= form.text_area "instructions_attributes[#{index}][description]", value: instruction.description, class: "form-control", rows: 2, placeholder: "例: フライパンにオリーブオイルを熱し、トマトを炒める(100文字以内)" %>
                       </div>
                       <div class="col-1">
                         <button type="button" class="btn-close mb-3 remove-instruction" aria-label="Close"></button>
