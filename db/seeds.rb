@@ -1,4 +1,3 @@
-# ユーザー作成
 User.create!(
   [
     { email: "user1@example.com", password: "password", name: "User One", bio: "I love cooking!", avatar: "default.png" }
@@ -63,6 +62,27 @@ recipe = Recipe.create!(
     { step: 2, description: "つゆが沸いたら、麺を温める。" },
     { step: 3, description: "どんぶりに麺を移し、つゆ、山芋を山芋をかける。" },
     { step: 4, description: "卵黄、ねぎ、刻み海苔をかけ、わさびをお好みで添えたら完成です。" }
+  ]
+)
+
+recipe = Recipe.create!(
+  title: "ラピュタパン",
+  work_name: "天空の城ラピュタ",
+  user: User.first,
+  category: Category.find_by(name: "アニメ"),
+  recipe_image: File.open(Rails.root.join("app/assets/images/rapyuta_bread.jpg")),
+  tip: "Lサイズの卵だとこぼれることがあるので、大きすぎない卵を使うことをお勧めします。",
+  ingredients_attributes: [
+    { name: "食パン", quantity: "1枚" },
+    { name: "卵", quantity: "1個" },
+    { name: "マヨネーズ", quantity: "適量" },
+    { name: "塩", quantity: "適量" },
+    { name: "胡椒", quantity: "適量" }
+  ],
+  instructions_attributes: [
+    { step: 1, description: "食パンふちを2段ほどマヨネーズで囲います。" },
+    { step: 2, description: "真ん中に卵を落とします。" },
+    { step: 3, description: "塩、胡椒を振り、アルミホイルに乗せてトースターで6〜8分焼きます" }
   ]
 )
 
