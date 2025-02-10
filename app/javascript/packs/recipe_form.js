@@ -9,10 +9,10 @@ $(document).on('turbolinks:load', function() {
     <div class="ingredient-group">
       <div class="row g-3 mb-3 align-items-end">
         <div class="col-6">
-          <input type="text" name="recipe[ingredients_attributes][${index}][name]" class="form-control form-pink" placeholder="例: トマト">
+          <input type="text" name="recipe[ingredients_attributes][${index}][name]" class="form-control form-pink" placeholder="例: トマト(20文字以内)">
         </div>
         <div class="col-5">
-          <input type="text" name="recipe[ingredients_attributes][${index}][quantity]" class="form-control form-pink" placeholder="例: 100g">
+          <input type="text" name="recipe[ingredients_attributes][${index}][quantity]" class="form-control form-pink" placeholder="例: 100g(20文字以内)">
         </div>
         <div class="col-1">
           <input type="hidden" name="recipe[ingredients_attributes][${index}][_destroy]" value="false" id="destroy-ingredient-${index}">
@@ -31,7 +31,7 @@ $(document).on('turbolinks:load', function() {
         <div class="row g-3 mb-3 align-items-end">
           <div class="col-11">
             <label class="form-label">手順 ${index + 1}</label>
-            <textarea name="recipe[instructions_attributes][${index}][description]" class="form-control form-pink" rows="2" placeholder="例: フライパンにオリーブオイルを熱し、トマトを炒める"></textarea>
+            <textarea name="recipe[instructions_attributes][${index}][description]" class="form-control form-pink" rows="2" placeholder="例: フライパンにオリーブオイルを熱し、トマトを炒める(100文字以内)"></textarea>
           </div>
           <div class="col-1">
             <input type="hidden" name="recipe[instructions_attributes][${index}][_destroy]" value="false" id="destroy-instruction-${index}">
