@@ -134,6 +134,89 @@ RSpec.describe "Users", type: :request do
     end
   end
 
+  describe "パスワード変更" do
+    let!(:test_user) { create(:user, email: "test@example.com") }
+    let(:reset_token) do
+      token = test_user.send_reset_password_instructions
+      test_user.reload
+      token
+    end
+
+    describe "GET /users/password/new" do
+      before do
+        get new_user_password_path
+      end
+
+      it "レスポンスが正常であること" do
+        expect(response).to have_http_status(200)
+      end
+
+      it "パスワード変更フォームが含まれていること" do
+        expect(response.body).to include("ご利用中のメールアドレスをご入力ください")
+        expect(response.body).to include("Email")
+      end
+    end
+
+    describe "POST /user/password" do
+      let(:valid_params) { { user: { email: test_user.email } } }
+      let(:invalid_params) { { user: { email: "non@exist.com" } } }
+
+      context "有効なパラメータの場合" do
+        it "パスワードリセットのメールが送信され、ログインページにリダイレクトされること" do
+          ActionMailer::Base.deliveries.clear
+          post user_password_path, params: valid_params
+          expect(response).to redirect_to(new_user_session_path)
+          expect(ActionMailer::Base.deliveries.count).to eq(1)
+        end
+      end
+
+      context "無効なパラメーターの場合" do
+        it "パスワードリセットのメールが送信されないこと" do
+          ActionMailer::Base.deliveries.clear
+          post user_password_path, params: invalid_params
+          expect(ActionMailer::Base.deliveries.count).to eq(0)
+          expect(response.body).to include("は見つかりませんでした。")
+        end
+      end
+    end
+
+    describe "GET /users/password/edit" do
+      before do
+        get edit_user_password_path, params: { reset_password_token: reset_token }
+      end
+
+      it "レスポンスが正常であること" do
+        expect(response).to have_http_status(200)
+      end
+
+      it "パスワード変更フォームが含まれていること" do
+        expect(response.body).to include("パスワード再設定")
+        expect(response.body).to include("新しいパスワード")
+      end
+    end
+
+    describe "PATCH /users/pasword" do
+      let(:valid_params) do
+        { user: { password: "new_password", password_confirmation: "new_password", reset_password_token: reset_token } }
+      end
+      let(:invalid_params) { { user: { password: "short", password_confirmation: "short", reset_password_token: reset_token } } }
+
+      context "有効なパラメーターの場合" do
+        it "パスワードが変更できて、トップページにリダイレクトされること" do
+          patch user_password_path, params: valid_params
+          expect(response).to redirect_to(root_path)
+        end
+      end
+
+      context "無効なパラメーターの場合" do
+        it "パスワードが変更できないこと" do
+          patch user_password_path, params: invalid_params
+          expect(response.body).to include("6文字以上で入力してください")
+        end
+      end
+    end
+  end
+
   describe "ログアウト" do
     describe "DELETE /users/sign_out" do
       it "アカウントがログアウトできること" do
