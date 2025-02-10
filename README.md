@@ -3,6 +3,7 @@
 マンガ、アニメ、小説や絵本などに出てくる料理の再現レシピサイトです。 <br>
 ユーザーが再現したレシピを投稿できます。<br>
 レスポンシブ対応しているのでスマホからもご確認いただけます。
+<img width="1440" alt="Image" src="https://github.com/user-attachments/assets/7065d173-4880-4500-af37-733fb374ed8c" />
 
 # URL
 https://saigen-kitchen-4e3497eb9a40.herokuapp.com
