@@ -7,6 +7,7 @@ ja:
       category: "カテゴリー"
       comment: "コメント"
       favorite: "お気に入り"
+      contact: "お問い合わせ"
     attributes:
       recipe:
         title: "レシピタイトル"
@@ -32,3 +33,8 @@ ja:
         content: "コメント内容"
         user: "ユーザー"
         recipe: "レシピ"
+      contact:
+        name: "名前"
+        email: "メールアドレス"
+        subject: "件名"
+        message: "お問い合わせ内容"

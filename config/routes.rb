@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'contacts/new'
+  get 'contacts/create'
   root 'home#index'
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
@@ -16,5 +18,11 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_scope :user do
     post 'users/guest_log_in', to: 'users/sessions#guest_log_in'
+  end
+  resources :contacts, only: [:new, :create] do
+    collection do
+        post 'confirm'
+        post 'back'
+    end
   end
 end

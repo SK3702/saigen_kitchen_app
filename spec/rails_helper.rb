@@ -5,6 +5,7 @@ require File.expand_path("../../config/environment", __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 require 'capybara/rspec'
+ENV['GOOGLE_MAIL_ADDRESS'] ||= 'test@example.com'
 
 Capybara.javascript_driver = :selenium_chromium_remote
 

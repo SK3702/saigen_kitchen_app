@@ -57,6 +57,11 @@ RSpec.describe "Home", type: :request do
       expect(response.body).not_to include(recipes[0].title)
     end
 
+    it "お問い合わせへのリンクが含まれていること" do
+      expect(response.body).to include("お問い合わせは")
+      expect(response.body).to include("こちら")
+    end
+
     context "管理者ユーザーの場合" do
       let(:admin_user) { create(:user, admin: true) }
 

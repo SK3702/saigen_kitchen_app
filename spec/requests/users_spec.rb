@@ -28,7 +28,7 @@ RSpec.describe "Users", type: :request do
         it "ユーザーが作成されない" do
           expect { post user_registration_path, params: { user: { name: "", email: "invalid", password: "short" } } }.
             not_to change(User, :count)
-          expect(response.body).to include("ユーザーネームを入力してください", "Eメールは不正な値です", "パスワードは6文字以上で入力してください")
+          expect(response.body).to include("ユーザーネームを入力してください", "メールアドレスは不正な値です", "パスワードは6文字以上で入力してください")
         end
       end
     end
@@ -57,7 +57,7 @@ RSpec.describe "Users", type: :request do
       context "無効なパラメータの場合" do
         it "ログインに失敗する" do
           post user_session_path, params: { user: { email: user.email, password: "wrong_password" } }
-          expect(response.body).to include("Eメールまたはパスワードが違います")
+          expect(response.body).to include("メールアドレスまたはパスワードが違います")
         end
       end
     end
@@ -120,7 +120,7 @@ RSpec.describe "Users", type: :request do
         it "アカウント情報更新に失敗すること" do
           invalid_image = Rack::Test::UploadedFile.new(image_file_path("invalid_image.txt"), "text/plain")
           patch user_registration_path, params: { user: { name: "", email: "invalid", avatar: invalid_image } }
-          expect(response.body).to include("ユーザーネームを入力してください", "Eメールは不正な値です", "アイコン画像は許可されていない拡張子です")
+          expect(response.body).to include("ユーザーネームを入力してください", "メールアドレスは不正な値です", "アイコン画像は許可されていない拡張子です")
         end
       end
 
