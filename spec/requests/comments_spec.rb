@@ -22,7 +22,7 @@ RSpec.describe "Comments", type: :request do
         end
 
         context "無効なパラメータの場合" do
-          it "コメント作成に失敗し、メッセージが表示されること" do
+          it "コメント作成に失敗し、リダイレクト先にフラッシュメッセージが含まれていること" do
             expect { post recipe_comments_path(recipe), params: { comment: invalid_attributes } }.not_to change(Comment, :count)
             expect(response).to redirect_to(recipe_path(recipe))
             follow_redirect!

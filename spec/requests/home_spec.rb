@@ -32,7 +32,7 @@ RSpec.describe "Home", type: :request do
       expect(response.body).to include("人気レシピ")
     end
 
-    it "人気レシピとして人気のも最も高い3つのみが表示されること" do
+    it "人気レシピとして人気のも最も高い3つのみが含まれていること" do
       html = Nokogiri::HTML(response.body)
       popular_section = html.at_css('.popular-recipes-area')
       popular_text = popular_section.text
@@ -43,7 +43,7 @@ RSpec.describe "Home", type: :request do
       expect(popular_text).not_to include(recipes[0].title)
     end
 
-    it "各カテゴリのレシピセクションが表示されていること" do
+    it "各カテゴリのレシピセクションが含まれていること" do
       get root_path
       categories.each do |category|
         expect(response.body).to include(category.name)
