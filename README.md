@@ -4,6 +4,7 @@
 ユーザーが再現したレシピを投稿できます。<br>
 レスポンシブ対応しているのでスマホからもご確認いただけます。
 <img width="1440" alt="Image" src="https://github.com/user-attachments/assets/7065d173-4880-4500-af37-733fb374ed8c" />
+<img width="378" alt="Image" src="https://github.com/user-attachments/assets/17048879-1e03-4dcb-b762-6d5d4c0b59db" />
 
 # URL
 https://saigen-kitchen-4e3497eb9a40.herokuapp.com
