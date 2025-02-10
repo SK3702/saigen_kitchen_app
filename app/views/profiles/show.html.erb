@@ -6,7 +6,7 @@
         <div class="card mb-4">
           <div class="card-body text-center position-relative">
             <% if @user == current_user %>
-              <%= link_to "編集", edit_user_registration_path, class: "position-absolute edit-profile-position" %>
+              <%= link_to "編集", edit_user_registration_path, class: "position-absolute edit-profile-position text-decoration-none" %>
             <% end %>
             <%= image_tag(@user.avatar.url, alt: "アバター画像", class: "img-fluid rounded-circle img-fluid mb-3") %>
             <div class="row mb-2">
