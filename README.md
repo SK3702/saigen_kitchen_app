@@ -1,24 +1,32 @@
-# README
+# 再現Kitchen
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+マンガ、アニメ、小説や絵本などに出てくる料理の再現レシピサイトです。
+ユーザーが再現したレシピを投稿できます。
+レスポンシブ対応しているのでスマホからもご確認いただけます。
 
-Things you may want to cover:
+#URL
+https://saigen-kitchen-4e3497eb9a40.herokuapp.com
 
-* Ruby version
+#使用技術
+・Ruby 3.3.3
+・Ruby on Rails 6.1.7.10
+・Mysql 8.0.35
+・HEROKU
+・AWS S3bucket
+・Docker/Docker-compose
+・CircleCi CI/CD
+・Rspec
 
-* System dependencies
+#機能一覧
+・ユーザー登録、ログイン機能(devise)
+・投稿機能
+    画像投稿(carirrewave)
+・お気に入り機能
+・コメント機能
+・レシピ検索機能
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+#テスト
+・Rspec
+    model spec
+    request spec
+    system spec
