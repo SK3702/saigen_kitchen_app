@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_02_12_082628) do
+ActiveRecord::Schema.define(version: 2025_02_12_211350) do
 
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2025_02_12_082628) do
     t.string "work_author"
     t.integer "work_price"
     t.string "work_url"
+    t.integer "servings_count"
     t.index ["category_id"], name: "index_recipes_on_category_id"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end

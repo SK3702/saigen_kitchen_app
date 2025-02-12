@@ -7,9 +7,15 @@
         <body data-page="new">
           <%= form_with model: @recipe, local: true do |form| %>
             <%= render "shared/error_messages", object: @recipe %>
-            <div class="mb-3 pt-2">
-              <%= form.label :title, "レシピタイトル", class: "form-label" %>
-              <%= form.text_field :title, class: "form-control", placeholder: "例: 〇〇のトマトパスタ(30文字以内)" %>
+            <div class="row">
+              <div class="mb-3 pt-2 col-9">
+                <%= form.label :title, "レシピタイトル", class: "form-label" %>
+                <%= form.text_field :title, class: "form-control", placeholder: "例: 〇〇のトマトパスタ(30文字以内)" %>
+              </div>
+              <div class="mb-3 pt-2 col-3">
+                <%= form.label :servings_count, "何人分", class:"form-label d-block" %>
+                <%= form.number_field :servings_count, in: 1..10, step: 1, class: "form-control w-50" %>
+              </div>
             </div>
             <div class="row">
               <div class="mb-3 col-7">

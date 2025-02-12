@@ -29,6 +29,11 @@ RSpec.describe Recipe, type: :model do
       it { should validate_length_of(:tip).is_at_most(200).with_message('は200文字以内で入力してください') }
     end
 
+    context '何人分のバリデーション' do
+      it { should validate_presence_of(:servings_count).with_message('を入力してください') }
+      it { should validate_numericality_of(:servings_count).only_integer.is_less_than_or_equal_to(10) }
+    end
+
     context '材料のバリデーション' do
       it '材料が少なくとも1つ必要なこと' do
         recipe.ingredients = []

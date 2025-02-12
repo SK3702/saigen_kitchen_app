@@ -36,7 +36,7 @@
         <div class="mb-5">
           <div class="row gap-5">
             <div class="mb-4 col-lg-4">
-              <h4 class="border-bottom pb-2 mb-0">材料</h4>
+              <h4 class="border-bottom pb-2 mb-0">材料<span class="fs-6 text-muted">（<%= @recipe.servings_count %>人分）</span></h4>
               <ul class="list-group">
               <% @recipe.ingredients.each_with_index do |ingredient, index| %>
                 <li class="pt-3 px-3 d-flex justify-content-between <%= index.even? ? "bg-white" : "bg-light" %>">
@@ -63,7 +63,7 @@
           </div>
         </div>
 
-        <% if @recipe.work_title %>
+        <% unless @recipe.work_title == "" %>
           <div class="border-bottom pb-3 mb-5">
             <div class="card mb-5 col-xl-6 offset-xl-3 col-md-8 offset-md-2">
               <div class="card-header bg-pink">
@@ -86,7 +86,6 @@
             </div>
           </div>
         <% end %>
-
 
         <div class="row comments-area">
           <div class="col-lg-8 mb-4">

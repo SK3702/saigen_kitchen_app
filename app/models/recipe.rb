@@ -30,6 +30,7 @@ class Recipe < ApplicationRecord
   validates :work_name, presence: true, length: { maximum: 30 }
   validates :recipe_image, presence: true
   validates :tip, presence: true, length: { maximum: 200 }
+  validates :servings_count, presence: true, numericality: { only_integer: true, less_than_or_equal_to: 10 }
   validates :ingredients, presence: { message: "を少なくとも1つ追加してください。" }
   validates :instructions, presence: { message: "を少なくとも1つ追加してください。" }
 end

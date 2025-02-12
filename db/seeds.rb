@@ -25,6 +25,7 @@ recipe = Recipe.create!(
   category: Category.find_by(name: "小説・絵本"),
   recipe_image: File.open(Rails.root.join("app/assets/images/pancake.jpg")),
   tip: "いい材料を使ってください。",
+  servings_count: 2,
   ingredients_attributes: [
     { name: "卵", quantity: "2個" },
     { name: "グラニュー糖", quantity: "65g" },
@@ -47,6 +48,7 @@ recipe = Recipe.create!(
   category: Category.find_by(name: "マンガ"),
   recipe_image: File.open(Rails.root.join("app/assets/images/udon.jpg")),
   tip: "簡単です。",
+  servings_count: 1,
   ingredients_attributes: [
     { name: "冷凍うどん", quantity: "1玉" },
     { name: "めんつゆ(3倍濃縮)", quantity: "50cc" },
@@ -72,6 +74,7 @@ recipe = Recipe.create!(
   category: Category.find_by(name: "アニメ"),
   recipe_image: File.open(Rails.root.join("app/assets/images/rapyuta_bread.jpg")),
   tip: "Lサイズの卵だとこぼれることがあるので、大きすぎない卵を使うことをお勧めします。",
+  servings_count: 1,
   ingredients_attributes: [
     { name: "食パン", quantity: "1枚" },
     { name: "卵", quantity: "1個" },
