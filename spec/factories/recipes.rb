@@ -8,6 +8,11 @@ FactoryBot.define do
         Rails.root.join('spec', 'fixtures', 'images', 'test_recipe_image.png'), 'image/png'
       )
     end
+    work_title { "test_title" }
+    work_author { "test_author" }
+    work_image { "https://example.png" }
+    work_price { 1000 }
+    work_url { "https://example.com" }
     association :user
     association :category
 

@@ -13,7 +13,7 @@ RSpec.describe "Recipes", type: :system do
       visit new_recipe_path
     end
 
-    it "正しい情報を入力するとレシピを投稿できること" do
+    it "正しい情報を入力するとレシピを投稿できること", js: true do
       fill_in "レシピタイトル", with: "new_recipe"
       fill_in "作品名", with: "new_book"
       select "マンガ", from: "カテゴリー"
@@ -22,6 +22,10 @@ RSpec.describe "Recipes", type: :system do
       fill_in "recipe[ingredients_attributes[0][name]]", with: "小麦粉"
       fill_in "recipe[ingredients_attributes[0][quantity]]", with: "100g"
       fill_in "recipe[instructions_attributes[0][description]]", with: "新しい手順の説明"
+
+      fill_in "keyword", with: "ワンピース"
+      find('#work_search_button').click
+      first('#work_suggestions li').click
       click_button "投稿する"
 
       created_recipe = Recipe.last
@@ -39,6 +43,10 @@ RSpec.describe "Recipes", type: :system do
         expect(page).to have_content(instruction.step)
         expect(page).to have_content(instruction.description)
       end
+      expect(page).to have_content(created_recipe.work_title)
+      expect(page).to have_content(created_recipe.work_author)
+      expect(page).to have_selector("img[src$='#{created_recipe.work_image}']")
+      expect(page).to have_content(created_recipe.work_price)
     end
 
     it "画像選択で画像プレビューが表示されること", js: true do
@@ -110,6 +118,10 @@ RSpec.describe "Recipes", type: :system do
         expect(page).to have_content(instruction.step)
         expect(page).to have_content(instruction.description)
       end
+      expect(page).to have_content(recipe.work_title)
+      expect(page).to have_content(recipe.work_author)
+      expect(page).to have_selector("img[src$='#{recipe.work_image}']")
+      expect(page).to have_content(recipe.work_price)
     end
 
     it "ログインユーザーが自分の投稿を編集できるリンクがあり、クリックで遷移すること" do
@@ -158,7 +170,7 @@ RSpec.describe "Recipes", type: :system do
       end
     end
 
-    it "正しい情報を入力するとレシピを編集できること" do
+    it "正しい情報を入力するとレシピを編集できること", js: true do
       fill_in "レシピタイトル", with: "新しいタイトル"
       fill_in "作品名", with: "新しい作品名"
       select "アニメ", from: "カテゴリー"
@@ -166,6 +178,10 @@ RSpec.describe "Recipes", type: :system do
       fill_in "recipe[ingredients_attributes[0][name]]", with: "新しい材料"
       fill_in "recipe[ingredients_attributes[0][quantity]]", with: "200g"
       fill_in "recipe[instructions_attributes[0][description]]", with: "新しい手順"
+
+      fill_in "keyword", with: "鬼滅の刃"
+      find('#work_search_button').click
+      first('#work_suggestions li').click
       click_button "更新する"
 
       recipe.reload
@@ -183,6 +199,10 @@ RSpec.describe "Recipes", type: :system do
         expect(page).to have_content(instruction.step)
         expect(page).to have_content(instruction.description)
       end
+      expect(page).to have_content(recipe.work_title)
+      expect(page).to have_content(recipe.work_author)
+      expect(page).to have_selector("img[src$='#{recipe.work_image}']")
+      expect(page).to have_content(recipe.work_price)
     end
 
     it "画像選択で古い画像が消え、新しい画像プレビューが表示されること", js: true do

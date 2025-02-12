@@ -11,8 +11,11 @@ Rails.application.routes.draw do
   resources :recipes, except: [:index] do
     resources :comments, only: [:create, :destroy]
     resource :favorite, only: [:create, :destroy]
-    get :favorites, on: :collection
-    get :search, on: :collection
+    collection do
+      get :favorites
+      get :search
+      get :work_search
+    end
   end
   resources :categories, only: [:show]
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'

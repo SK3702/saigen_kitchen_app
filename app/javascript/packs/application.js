@@ -17,3 +17,4 @@ ActiveStorage.start()
 
 require("./recipe_form.js")
 require("./preview.js")
+require("./work_search.js")

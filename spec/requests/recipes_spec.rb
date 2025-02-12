@@ -104,7 +104,12 @@ RSpec.describe "Recipes", type: :request do
           recipe.ingredients.first.name,
           recipe.ingredients.first.quantity,
           recipe.instructions.first.step.to_s,
-          recipe.instructions.first.description
+          recipe.instructions.first.description,
+          recipe.work_title,
+          recipe.work_author,
+          recipe.work_image,
+          recipe.work_price.to_s,
+          recipe.work_url
         )
         expect(response.body).not_to include(other_recipe.title)
       end
@@ -165,6 +170,11 @@ RSpec.describe "Recipes", type: :request do
             instructions_attributes: [
               { description: "うどんを茹でる。" },
             ],
+            work_title: "updated_title",
+            work_author: "updated_author",
+            work_image: "https://updated-example.png",
+            work_price: 2000,
+            work_url: "https://updated-example.com",
           }
           patch recipe_path(recipe), params: { recipe: updated_attributes }
           expect(response).to redirect_to(recipe_path(recipe))
@@ -291,6 +301,28 @@ RSpec.describe "Recipes", type: :request do
           expect(response.body).not_to include("レシピ1")
           expect(response.body).not_to include("テスト2")
         end
+      end
+    end
+
+    describe "GET /recipes/work_search" do
+      let(:valid_keyword) { "本" }
+      let(:invalid_keyword) { "asdfghj" }
+
+      it "パラメータが存在すればリクエストが正常であること" do
+        get work_search_recipes_path, xhr: true, params: { keyword: valid_keyword }
+        expect(response).to have_http_status(200)
+      end
+
+      it "レスポンスがJSON形式で返却され、期待するキーを含んでいること" do
+        get work_search_recipes_path, xhr: true, params: { keyword: valid_keyword }
+        json = JSON.parse(response.body)
+        expect(json.first).to include("id", "title", "author", "image_url", "author", "price", "url", "type")
+      end
+
+      it "検索結果が存在しない場合、空の配列が返ること" do
+        get work_search_recipes_path, xhr: true, params: { keyword: invalid_keyword }
+        json = JSON.parse(response.body)
+        expect(json).to eq([])
       end
     end
   end

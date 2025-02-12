@@ -100,12 +100,29 @@
               <%= button_tag "+追加", type: "button", class: "d-block mx-auto border-0 bg-transparent", id: "add-instruction" %>
             </div>
 
+            <%= form.hidden_field :work_title, id: "recipe_work_title" %>
+            <%= form.hidden_field :work_author, id: "recipe_work_author" %>
+            <%= form.hidden_field :work_image, id: "recipe_work_image" %>
+            <%= form.hidden_field :work_price, id: "recipe_work_price" %>
+            <%= form.hidden_field :work_url, id: "recipe_work_url" %>
+
             <div class="mt-5 me-xl-4 me-md-3 me-2 d-flex justify-content-end">
               <%= link_to "削除する", recipe_path, method: :delete, data: { confirm: "本当に削除しますか？" }, class:"text-decoration-none text-danger border border-danger px-3 py-1 rounded d-flex align-items-center me-4" %>
               <%= form.submit "更新する", class: "btn" %>
             </div>
           <% end %>
         </body>
+        <h5 class="border-bottom mt-5 pb-2">詳細な作品情報を追加</h5>
+        <div class="d-flex justify-content-center">
+          <%= form_with url: work_search_recipes_path, method: :get, remote: true, class: "d-flex align-items-center" do |f| %>
+            <%= f.text_field :keyword, placeholder: "作品名を入力", id: "work_search_field", class: "form-control mx-3 search-bar rounded" %>
+            <%= button_tag(type: "submit", id: "work_search_button", class: "btn bg-white-btn me-5 rounded") do %>
+              <i class="bi bi-search"></i>
+            <% end %>
+          <% end %>
+        </div>
+        <div id="entered_work"></div>
+        <ul id="work_suggestions"></ul>
       </div>
     </div>
   </div>

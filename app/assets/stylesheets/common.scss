@@ -73,6 +73,10 @@ body {
   }
 }
 
+.bg-pink {
+  background-color: #ffdbd354;
+}
+
 .text-pink {
   color: #ff907c;
 }
@@ -154,10 +158,6 @@ footer {
 }
 
 /* recipes */
-.bg-pink {
-  background-color: #ffdbd354;
-}
-
 .recipe-image-size {
   max-height: 320px;
   min-width: 250px;
@@ -178,6 +178,14 @@ footer {
   height: 28px;
   border-radius: 50%;
   background-color: #ff907c;
+}
+
+.work-suggenstion:hover {
+  background-color: #ffd4cd27;
+}
+
+.work-link:hover {
+  background-color: rgba(0, 0, 0, 0.138);
 }
 
 @media (max-width: 1024px) {
