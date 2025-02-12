@@ -60,3 +60,7 @@ Rails.application.configure do
   config.hosts += ["web", "www.example.com"]
   config.action_mailer.default_url_options = { host: "www.example.com" }
 end
+
+RakutenWebService.configure do |c|
+  c.application_id = 'dummy'
+end
