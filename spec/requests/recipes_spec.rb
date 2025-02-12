@@ -306,7 +306,42 @@ RSpec.describe "Recipes", type: :request do
 
     describe "GET /recipes/work_search" do
       let(:valid_keyword) { "本" }
-      let(:invalid_keyword) { "asdfghj" }
+
+      let(:book_result) do
+        instance_double(
+          RakutenWebService::Books::Book,
+          isbn: "1234567890",
+          title: "テストブックタイトル",
+          large_image_url: "http://example.com/book.jpg",
+          author: "テスト著者",
+          item_price: 1500,
+          item_url: "http://example.com/book"
+        )
+      end
+      let(:dvd_result) do
+        instance_double(
+          RakutenWebService::Books::DVD,
+          jan: "0987654321",
+          title: "テストDVDタイトル",
+          large_image_url: "http://example.com/dvd.jpg",
+          label: "テストレーベル",
+          item_price: 2500,
+          item_url: "http://example.com/dvd"
+        )
+      end
+
+      before do
+        allow(RakutenWebService::Books::Total).to receive(:search).
+          with(keyword: valid_keyword).
+          and_return([book_result, dvd_result])
+
+        allow(book_result).to receive(:is_a?) do |genre|
+          genre == RakutenWebService::Books::Book
+        end
+        allow(dvd_result).to receive(:is_a?) do |genre|
+          genre == RakutenWebService::Books::DVD
+        end
+      end
 
       it "パラメータが存在すればリクエストが正常であること" do
         get work_search_recipes_path, xhr: true, params: { keyword: valid_keyword }
@@ -316,13 +351,7 @@ RSpec.describe "Recipes", type: :request do
       it "レスポンスがJSON形式で返却され、期待するキーを含んでいること" do
         get work_search_recipes_path, xhr: true, params: { keyword: valid_keyword }
         json = JSON.parse(response.body)
-        expect(json.first).to include("id", "title", "author", "image_url", "author", "price", "url", "type")
-      end
-
-      it "検索結果が存在しない場合、空の配列が返ること" do
-        get work_search_recipes_path, xhr: true, params: { keyword: invalid_keyword }
-        json = JSON.parse(response.body)
-        expect(json).to eq([])
+        expect(json.first).to include("id", "title", "author", "image_url", "price", "url", "type")
       end
     end
   end

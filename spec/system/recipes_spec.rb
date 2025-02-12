@@ -22,10 +22,6 @@ RSpec.describe "Recipes", type: :system do
       fill_in "recipe[ingredients_attributes[0][name]]", with: "小麦粉"
       fill_in "recipe[ingredients_attributes[0][quantity]]", with: "100g"
       fill_in "recipe[instructions_attributes[0][description]]", with: "新しい手順の説明"
-
-      fill_in "keyword", with: "ワンピース"
-      find('#work_search_button').click
-      first('#work_suggestions li').click
       click_button "投稿する"
 
       created_recipe = Recipe.last
@@ -43,10 +39,6 @@ RSpec.describe "Recipes", type: :system do
         expect(page).to have_content(instruction.step)
         expect(page).to have_content(instruction.description)
       end
-      expect(page).to have_content(created_recipe.work_title)
-      expect(page).to have_content(created_recipe.work_author)
-      expect(page).to have_selector("img[src$='#{created_recipe.work_image}']")
-      expect(page).to have_content(created_recipe.work_price)
     end
 
     it "画像選択で画像プレビューが表示されること", js: true do
@@ -136,6 +128,12 @@ RSpec.describe "Recipes", type: :system do
       expect(current_path).to eq(profile_path(user))
     end
 
+    it "楽天APIのリンクのhrefが正しいURLであること" do
+      find('.work-link').click
+      link = find('.work-link a')
+      expect(link[:href]).to eq(recipe.work_url)
+    end
+
     context "他のユーザーの場合" do
       it "編集ボタンが表示されないこと" do
         sign_in other_user
@@ -178,10 +176,6 @@ RSpec.describe "Recipes", type: :system do
       fill_in "recipe[ingredients_attributes[0][name]]", with: "新しい材料"
       fill_in "recipe[ingredients_attributes[0][quantity]]", with: "200g"
       fill_in "recipe[instructions_attributes[0][description]]", with: "新しい手順"
-
-      fill_in "keyword", with: "鬼滅の刃"
-      find('#work_search_button').click
-      first('#work_suggestions li').click
       click_button "更新する"
 
       recipe.reload

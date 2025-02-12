@@ -6,8 +6,6 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 require 'capybara/rspec'
 ENV['GOOGLE_MAIL_ADDRESS'] ||= 'test@example.com'
-ENV["RAKUTEN_APPLICATION_ID"] ||= "dummy_app_id"
-
 
 Capybara.javascript_driver = :selenium_chromium_remote
 
