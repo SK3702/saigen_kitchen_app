@@ -14,6 +14,7 @@ ja:
         work_name: "作品名"
         recipe_image: "料理画像"
         tip: "ポイント・コツ"
+        servings_count: "何人分"
         ingredients: "材料"
         instructions: "手順"
         category: "カテゴリー"

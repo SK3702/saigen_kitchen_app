@@ -32,7 +32,7 @@ RSpec.describe "Recipes", type: :request do
         end
 
         it "レシピ投稿フォームが含まれていること" do
-          expect(response.body).to include("レシピタイトル", "作品名", "カテゴリー",
+          expect(response.body).to include("レシピタイトル", "何人分", "作品名", "カテゴリー",
             "料理画像", "ポイント・コツ", "材料名", "分量", "手順")
         end
       end
@@ -61,6 +61,7 @@ RSpec.describe "Recipes", type: :request do
             work_name: "",
             category_id: nil,
             tip: "",
+            servings_count: "100",
             recipe_image: "",
             ingredients_attributes: [
               { name: "", quantity: "" },
@@ -72,6 +73,7 @@ RSpec.describe "Recipes", type: :request do
           expect { post recipes_path, params: { recipe: invalid_attributes } }.not_to change(Recipe, :count)
           expect(response.body).to include("を入力してください")
           expect(response.body).to include("を少なくとも1つ追加してください。")
+          expect(response.body).to include("以下の値にしてください")
         end
       end
 
@@ -101,6 +103,7 @@ RSpec.describe "Recipes", type: :request do
           recipe.category.name,
           "src=\"#{recipe.recipe_image.url}\"",
           recipe.tip,
+          recipe.servings_count.to_s,
           recipe.ingredients.first.name,
           recipe.ingredients.first.quantity,
           recipe.instructions.first.step.to_s,
@@ -130,7 +133,7 @@ RSpec.describe "Recipes", type: :request do
         end
 
         it "レシピ情報編集フォームが含まれていること" do
-          expect(response.body).to include("レシピタイトル", "作品名", "カテゴリー",
+          expect(response.body).to include("レシピタイトル", "何人分", "作品名", "カテゴリー",
             "料理画像", "ポイント・コツ", "材料名", "分量", "手順")
         end
       end
@@ -163,6 +166,7 @@ RSpec.describe "Recipes", type: :request do
             work_name: "test_book2",
             category_id: updated_category.id,
             tip: "難しい",
+            servings_count: 2,
             recipe_image: updated_image,
             ingredients_attributes: [
               { name: "うどん", quantity: "1玉" },
@@ -189,6 +193,7 @@ RSpec.describe "Recipes", type: :request do
             work_name: "",
             category_id: nil,
             tip: "",
+            servings_count: "",
             recipe_image: invalid_image,
           }
           patch recipe_path(recipe), params: { recipe: invalid_attributes }

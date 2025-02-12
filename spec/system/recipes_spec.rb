@@ -15,6 +15,7 @@ RSpec.describe "Recipes", type: :system do
 
     it "正しい情報を入力するとレシピを投稿できること", js: true do
       fill_in "レシピタイトル", with: "new_recipe"
+      fill_in "何人分", with: 1
       fill_in "作品名", with: "new_book"
       select "マンガ", from: "カテゴリー"
       attach_file("料理画像", image_file_path("test_recipe_image.png"))
@@ -31,6 +32,7 @@ RSpec.describe "Recipes", type: :system do
       expect(page).to have_content(created_recipe.category.name)
       expect(page).to have_selector("img[src$='#{created_recipe.recipe_image.url}']")
       expect(page).to have_content(created_recipe.tip)
+      expect(page).to have_content(created_recipe.servings_count)
       created_recipe.ingredients.each do |ingredient|
         expect(page).to have_content(ingredient.name)
         expect(page).to have_content(ingredient.quantity)
@@ -48,6 +50,7 @@ RSpec.describe "Recipes", type: :system do
 
     it "無効な情報を入力するとレシピを投稿できないこと" do
       fill_in "レシピタイトル", with: ""
+      fill_in "何人分", with: 100
       fill_in "作品名", with: ""
       attach_file("料理画像", image_file_path("invalid_image.txt"))
       fill_in "ポイント・コツ", with: ""
@@ -63,6 +66,7 @@ RSpec.describe "Recipes", type: :system do
       expect(page).to have_content("作品名を入力してください")
       expect(page).to have_content("料理画像を入力してください")
       expect(page).to have_content("ポイント・コツを入力してください")
+      expect(page).to have_content("何人分は10以下の値にしてください")
       expect(page).to have_content("材料を少なくとも1つ追加してください。")
       expect(page).to have_content("手順を少なくとも1つ追加してください。")
     end
@@ -101,6 +105,7 @@ RSpec.describe "Recipes", type: :system do
       expect(page).to have_content(recipe.category.name)
       expect(page).to have_content(recipe.user.name)
       expect(page).to have_content(recipe.tip)
+      expect(page).to have_content("#{recipe.servings_count}人分")
       expect(page).to have_selector("img[src$='#{recipe.recipe_image.url}']")
       recipe.ingredients.each do |ingredient|
         expect(page).to have_content(ingredient.name)
@@ -155,6 +160,7 @@ RSpec.describe "Recipes", type: :system do
 
     it "現在のレシピ情報が編集フォームに表示されていること" do
       expect(page).to have_field("レシピタイトル", with: recipe.title)
+      expect(page).to have_field("何人分", with: recipe.servings_count)
       expect(page).to have_field("作品名", with: recipe.work_name)
       expect(page).to have_select("カテゴリー", selected: recipe.category.name)
       expect(page).to have_field("ポイント・コツ", with: recipe.tip)
@@ -170,6 +176,7 @@ RSpec.describe "Recipes", type: :system do
 
     it "正しい情報を入力するとレシピを編集できること", js: true do
       fill_in "レシピタイトル", with: "新しいタイトル"
+      fill_in "何人分", with: 5
       fill_in "作品名", with: "新しい作品名"
       select "アニメ", from: "カテゴリー"
       fill_in "ポイント・コツ", with: "新しいポイント"
@@ -185,6 +192,7 @@ RSpec.describe "Recipes", type: :system do
       expect(page).to have_content(recipe.category.name)
       expect(page).to have_selector("img[src$='#{recipe.recipe_image.url}']")
       expect(page).to have_content(recipe.tip)
+      expect(page).to have_content("#{recipe.servings_count}人分")
       recipe.ingredients.each do |ingredient|
         expect(page).to have_content(ingredient.name)
         expect(page).to have_content(ingredient.quantity)
@@ -207,6 +215,7 @@ RSpec.describe "Recipes", type: :system do
 
     it "無効な情報を入力するとエラーが表示されること" do
       fill_in "レシピタイトル", with: ""
+      fill_in "何人分", with: 100
       fill_in "作品名", with: ""
       fill_in "ポイント・コツ", with: ""
       fill_in "recipe[ingredients_attributes[0][name]]", with: ""
@@ -217,6 +226,7 @@ RSpec.describe "Recipes", type: :system do
       expect(page).to have_content("レシピタイトルを入力してください")
       expect(page).to have_content("作品名を入力してください")
       expect(page).to have_content("ポイント・コツを入力してください")
+      expect(page).to have_content("何人分は10以下の値にしてください")
       expect(page).to have_content("材料名を入力してください")
       expect(page).to have_content("分量を入力してください")
       expect(page).to have_content("説明を入力してください")

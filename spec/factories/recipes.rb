@@ -8,6 +8,7 @@ FactoryBot.define do
         Rails.root.join('spec', 'fixtures', 'images', 'test_recipe_image.png'), 'image/png'
       )
     end
+    servings_count { 1 }
     work_title { "test_title" }
     work_author { "test_author" }
     work_image { "https://example.png" }
