@@ -33,7 +33,7 @@
           </div>
         </div>
 
-        <div class="border-bottom mb-5">
+        <div class="mb-5">
           <div class="row gap-5">
             <div class="mb-4 col-lg-4">
               <h4 class="border-bottom pb-2 mb-0">材料</h4>
@@ -62,6 +62,31 @@
             </div>
           </div>
         </div>
+
+        <% if @recipe.work_title %>
+          <div class="border-bottom pb-3 mb-5">
+            <div class="card mb-5 col-xl-6 offset-xl-3 col-md-8 offset-md-2">
+              <div class="card-header bg-pink">
+                作品情報
+              </div>
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-around">
+                  <div class="me-3 work-link">
+                    <%= link_to @recipe.work_url, class: "text-dark" do %>
+                      <h4 class="card-title mb-1"><%= @recipe.work_title %></h4>
+                      <p class="card-text mb-0 me-2 text-muted d-flex justify-content-end"><%= @recipe.work_author %></p>
+                      <p class="card-text mb-0 me-2 d-flex justify-content-end">¥<%= @recipe.work_price %></p>
+                    <% end %>
+                  </div>
+                  <div>
+                    <%= image_tag @recipe.work_image, class: "img-fluid rounded border", alt: "作品画像" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
 
         <div class="row comments-area">
           <div class="col-lg-8 mb-4">

@@ -13,7 +13,7 @@ RSpec.describe "Recipes", type: :system do
       visit new_recipe_path
     end
 
-    it "正しい情報を入力するとレシピを投稿できること" do
+    it "正しい情報を入力するとレシピを投稿できること", js: true do
       fill_in "レシピタイトル", with: "new_recipe"
       fill_in "作品名", with: "new_book"
       select "マンガ", from: "カテゴリー"
@@ -110,6 +110,10 @@ RSpec.describe "Recipes", type: :system do
         expect(page).to have_content(instruction.step)
         expect(page).to have_content(instruction.description)
       end
+      expect(page).to have_content(recipe.work_title)
+      expect(page).to have_content(recipe.work_author)
+      expect(page).to have_selector("img[src$='#{recipe.work_image}']")
+      expect(page).to have_content(recipe.work_price)
     end
 
     it "ログインユーザーが自分の投稿を編集できるリンクがあり、クリックで遷移すること" do
@@ -122,6 +126,12 @@ RSpec.describe "Recipes", type: :system do
         click_link user.name
       end
       expect(current_path).to eq(profile_path(user))
+    end
+
+    it "楽天APIのリンクのhrefが正しいURLであること" do
+      find('.work-link').click
+      link = find('.work-link a')
+      expect(link[:href]).to eq(recipe.work_url)
     end
 
     context "他のユーザーの場合" do
@@ -158,7 +168,7 @@ RSpec.describe "Recipes", type: :system do
       end
     end
 
-    it "正しい情報を入力するとレシピを編集できること" do
+    it "正しい情報を入力するとレシピを編集できること", js: true do
       fill_in "レシピタイトル", with: "新しいタイトル"
       fill_in "作品名", with: "新しい作品名"
       select "アニメ", from: "カテゴリー"
@@ -183,6 +193,10 @@ RSpec.describe "Recipes", type: :system do
         expect(page).to have_content(instruction.step)
         expect(page).to have_content(instruction.description)
       end
+      expect(page).to have_content(recipe.work_title)
+      expect(page).to have_content(recipe.work_author)
+      expect(page).to have_selector("img[src$='#{recipe.work_image}']")
+      expect(page).to have_content(recipe.work_price)
     end
 
     it "画像選択で古い画像が消え、新しい画像プレビューが表示されること", js: true do

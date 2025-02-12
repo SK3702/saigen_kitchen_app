@@ -53,11 +53,44 @@ class RecipesController < ApplicationController
     end
   end
 
+  def work_search
+    keyword = params[:keyword]
+    results = RakutenWebService::Books::Total.search(keyword: keyword)
+
+    formatted_results = results.map do |item|
+      if item.is_a?(RakutenWebService::Books::Book)
+        {
+          id: item.isbn,
+          title: item.title,
+          image_url: item.large_image_url,
+          author: item.author,
+          price: item.item_price,
+          url: item.item_url,
+          type: "本",
+        }
+      elsif item.is_a?(RakutenWebService::Books::DVD)
+        {
+          id: item.jan,
+          title: item.title,
+          image_url: item.large_image_url,
+          author: item.label,
+          price: item.item_price,
+          url: item.item_url,
+          type: "DVD",
+        }
+      else
+        nil
+      end
+    end.compact
+
+    render json: formatted_results
+  end
+
   private
 
   def recipe_params
     params.require(:recipe).permit(
-      :title, :work_name, :recipe_image, :tip, :category_id,
+      :title, :work_name, :recipe_image, :tip, :work_title, :work_author, :work_image, :work_price, :work_url, :category_id,
       ingredients_attributes: [:id, :name, :quantity, :_destroy],
       instructions_attributes: [:id, :step, :description, :_destroy]
     )

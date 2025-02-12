@@ -104,7 +104,12 @@ RSpec.describe "Recipes", type: :request do
           recipe.ingredients.first.name,
           recipe.ingredients.first.quantity,
           recipe.instructions.first.step.to_s,
-          recipe.instructions.first.description
+          recipe.instructions.first.description,
+          recipe.work_title,
+          recipe.work_author,
+          recipe.work_image,
+          recipe.work_price.to_s,
+          recipe.work_url
         )
         expect(response.body).not_to include(other_recipe.title)
       end
@@ -165,6 +170,11 @@ RSpec.describe "Recipes", type: :request do
             instructions_attributes: [
               { description: "うどんを茹でる。" },
             ],
+            work_title: "updated_title",
+            work_author: "updated_author",
+            work_image: "https://updated-example.png",
+            work_price: 2000,
+            work_url: "https://updated-example.com",
           }
           patch recipe_path(recipe), params: { recipe: updated_attributes }
           expect(response).to redirect_to(recipe_path(recipe))
@@ -291,6 +301,57 @@ RSpec.describe "Recipes", type: :request do
           expect(response.body).not_to include("レシピ1")
           expect(response.body).not_to include("テスト2")
         end
+      end
+    end
+
+    describe "GET /recipes/work_search" do
+      let(:valid_keyword) { "本" }
+
+      let(:book_result) do
+        instance_double(
+          RakutenWebService::Books::Book,
+          isbn: "1234567890",
+          title: "テストブックタイトル",
+          large_image_url: "http://example.com/book.jpg",
+          author: "テスト著者",
+          item_price: 1500,
+          item_url: "http://example.com/book"
+        )
+      end
+      let(:dvd_result) do
+        instance_double(
+          RakutenWebService::Books::DVD,
+          jan: "0987654321",
+          title: "テストDVDタイトル",
+          large_image_url: "http://example.com/dvd.jpg",
+          label: "テストレーベル",
+          item_price: 2500,
+          item_url: "http://example.com/dvd"
+        )
+      end
+
+      before do
+        allow(RakutenWebService::Books::Total).to receive(:search).
+          with(keyword: valid_keyword).
+          and_return([book_result, dvd_result])
+
+        allow(book_result).to receive(:is_a?) do |genre|
+          genre == RakutenWebService::Books::Book
+        end
+        allow(dvd_result).to receive(:is_a?) do |genre|
+          genre == RakutenWebService::Books::DVD
+        end
+      end
+
+      it "パラメータが存在すればリクエストが正常であること" do
+        get work_search_recipes_path, xhr: true, params: { keyword: valid_keyword }
+        expect(response).to have_http_status(200)
+      end
+
+      it "レスポンスがJSON形式で返却され、期待するキーを含んでいること" do
+        get work_search_recipes_path, xhr: true, params: { keyword: valid_keyword }
+        json = JSON.parse(response.body)
+        expect(json.first).to include("id", "title", "author", "image_url", "price", "url", "type")
       end
     end
   end
