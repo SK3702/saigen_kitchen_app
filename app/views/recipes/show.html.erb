@@ -94,14 +94,14 @@
               <div class="card mb-2">
                 <div class="card-body">
                   <div class="row">
-                    <div class="card-text col-11">
+                    <div class="card-text col-md-11 col-10">
                       <div class="mb-2">
                         <%= image_tag comment.user.avatar.url(:smaller), class: "rounded-circle me-1", alt: "アバター画像" %>
                         <span class="fw-bold custom-fs-14px"><%= comment.user.name %></span>
                       </div>
                       <span class="text-muted"><%= comment.content %></span>
                     </div>
-                    <div class="col-1">
+                    <div class="col-md-1 col-2 p-0">
                       <% if comment.user == current_user %>
                         <li class="nav-item dropdown">
                         <%= link_to "#", class: "nav-link text-dark", role: "button", data: { bs_toggle: "dropdown" } do %>
