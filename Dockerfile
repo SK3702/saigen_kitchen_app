@@ -4,6 +4,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update -qq && \
     apt-get install -y \
+    graphviz \
     default-mysql-client \
     build-essential \
     nodejs \
