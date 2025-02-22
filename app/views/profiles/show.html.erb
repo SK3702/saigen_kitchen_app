@@ -38,7 +38,7 @@
       </div>
       <div class="col-lg-8">
         <h3 class="text-center border-bottom border-warning mb-3 pb-1">投稿したレシピ</h3>
-        <ul class="row gx-4 gy-2 ps-5 pe-5">
+        <ul class="row gx-4 gy-2 ps-lg-5 pe-lg-5 px-1">
           <% @posted_recipes.each do |recipe| %>
             <li class="col-6 col-md-4">
               <%= link_to recipe_path(recipe.id), class: "text-decoration-none recipe-link" do %>
