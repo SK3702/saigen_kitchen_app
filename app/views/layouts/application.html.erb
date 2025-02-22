@@ -34,7 +34,7 @@
                               role: "button",
                               data: { bs_toggle: "dropdown" },
                               aria: { expanded: "false" } %>
-                  <ul class="dropdown-menu dropdown-menu-end text-center">
+                  <ul class="dropdown-menu dropdown-menu-end text-center mb-2 mb-lg-0">
                     <li><%= link_to "お気に入りレシピ", favorites_recipes_path(user_id: current_user.id), class: "dropdown-item" %></li>
                     <li><%= link_to "アカウント情報", profile_path(current_user.id), class: "dropdown-item" %></li>
                     <li><hr class="dropdown-divider"></li>
